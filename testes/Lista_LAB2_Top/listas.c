@@ -62,7 +62,7 @@ int main ()
     }
     printf ("Existem %d grupos.\n", bags_numb);
 
-    printf ("o lazaro e gay mas lindo ");
+    printf ("o  merda e gay mas lindo ");
 
 }
 
