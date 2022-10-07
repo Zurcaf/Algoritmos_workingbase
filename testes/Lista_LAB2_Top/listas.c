@@ -65,4 +65,3 @@ int main ()
     printf ("cruz e gay mas lindo ");
 
 }
-
