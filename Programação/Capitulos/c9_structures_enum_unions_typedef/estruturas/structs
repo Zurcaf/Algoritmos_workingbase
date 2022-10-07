@@ -1,0 +1,29 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+#include <stdbool.h>
+
+int main()
+{
+    struct asas {
+        int val;
+        char letra;
+    } xxx;
+
+    struct asas fole[5];
+
+
+    for (int t=0;t<(sizeof(fole)/sizeof(fole[0]));t++)
+    {
+        if (fole[t].letra=='a') return fole[t].val;
+    }
+    
+
+    fole[0].letra='a';
+    fole[0].val=1;
+
+
+
+
+}

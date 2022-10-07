@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1648777111 source:/home/kubuntu/Desktop/Programacao/Lab4/main.c
+	<stdio.h>
+	<stdlib.h>
+
