@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1649106284 source:/home/kubuntu/Desktop/Exemplos_Cap6/Ex1_malloc/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

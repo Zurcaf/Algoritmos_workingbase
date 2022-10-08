@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+#include <stdbool.h>
+
+int main(){
+board_colun = 0;
+line_track = 0;
+for (board_colun = 1; board_colun < (board_side + 1); board_colun++)
+{
+    for (line_track = 1; line_track < (board_side + 1); line_track++)
+    {
+        printf("%c ", matriz_tab[line_track][board_colun]);
+    }
+    printf("\n");
+}
+}

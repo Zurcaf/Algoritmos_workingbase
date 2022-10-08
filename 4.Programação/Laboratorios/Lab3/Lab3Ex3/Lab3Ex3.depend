@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1648227939 source:c:\users\afons\onedrive\ambiente de trabalho\lab3ex3\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
