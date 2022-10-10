@@ -2,13 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "dicionario.h"
+#include "headers/1-dicionario.h"
 
 
-int main()
+
+void saveDictionary(char *locationDict)
 {
     // char locationDict[] = "ficheirosTeste/dicionarios/portugues04-04-sl.dict";
-    char locationDict[] = "ficheirosTeste/dicionarios/testarContagem.dict";
+    //char locationDict[] = "ficheirosTeste/dicionarios/testarContagem.dict";
     // char locationDict[] = "ficheirosTeste/dicionarios/portugues04-08.dict";
     // char locationDict[] = "ficheirosTeste/dicionarios/portugues04-04-sl.dict";
 
@@ -140,7 +141,6 @@ int main()
     free(lenCountAux);
     free(tabs);
 
-    return 0;
 }
 
 void openFile()
