@@ -21,15 +21,32 @@ argsCheck(argc);
 // char locationDict[] = "ficheirosTeste/dicionarios/portugues04-08.dict";
 // char locationDict[] = "ficheirosTeste/dicionarios/portugues04-04-sl.dict";
 //char* dictLocation = "ficheirosTeste/dicionarios/testarContagem.dict";
-char* dictLocation = "ficheirosTeste/dicionarios/portugues04-08.dict";
-char* palsLocation = "ficheirosTeste/dicionarios/Simple01.pals";
+char* dictLocation;
+char* palsLocation;
 bool* palsActivation = NULL;
 
-dictAndPalsCheck(argv, dictLocation, palsLocation);
+dictAndPalsCheck(argv);
+dictLocation = (char *)malloc((strlen(argv[1]) + 1) * sizeof(char));
+if (dictLocation == NULL)
+{
+    fprintf(stderr, "ERROR: not enough memory available!\n");
+    exit(4);
+}
+strcpy(dictLocation, argv[1]);
+
+palsLocation = (char *)malloc((strlen(argv[2]) + 1) * sizeof(char));
+if (palsLocation == NULL)
+{
+    fprintf(stderr, "ERROR: not enough memory available!\n");
+    exit(4);
+}
+
 savePals(palsLocation, palsActivation);
 saveDictionary(dictLocation, palsActivation);
 
 
+free(dictLocation);
+free(palsLocation);
 
 return 0;
 }
@@ -43,7 +60,7 @@ void argsCheck(int argc)
     }
 }
 
-void dictAndPalsCheck(char *argv[], char *dictLocation, char *palsLocation)
+void dictAndPalsCheck(char *argv[])
 {
     int lenArgs[2], auxLen[2], i=0, j=0;
     char dict[] = DICT_EXT, pals[] = PALS_EXT;
@@ -75,5 +92,6 @@ void dictAndPalsCheck(char *argv[], char *dictLocation, char *palsLocation)
                 }
             }
         }
+
     }
 }

@@ -5,16 +5,8 @@
 
 #include "headers/1-dicionario.h"
 
-
-
 void saveDictionary(char *locationDict, bool* palsActivation)
 {
-
-    // char locationDict[] = "ficheirosTeste/dicionarios/portugues04-04-sl.dict";
-    //char locationDict[] = "ficheirosTeste/dicionarios/testarContagem.dict";
-    // char locationDict[] = "ficheirosTeste/dicionarios/portugues04-08.dict";
-    // char locationDict[] = "ficheirosTeste/dicionarios/portugues04-04-sl.dict";
-
     FILE *dictPointer;
 
     // abrir o ficheiro e verificar se foi aberto com sucesso
@@ -111,23 +103,6 @@ void saveDictionary(char *locationDict, bool* palsActivation)
     }
     
     fclose(dictPointer);
-
-    // int k = 1;
-    // for(i = 0; i < maxLen; i++)
-    // {
-    //     for (int j = 0; j < lenCount[i]; j++)
-    //     {
-    //         if(tabs[i][j] != NULL && tabs[i] !=NULL)
-    //         {
-    //             printf("%d- %s(%d)\n", k, tabs[i][j], i);
-    //             k++;
-    //         }
-    //     }
-    // }
-
-
-
-    
 
     //dar free a tudo
     for(i = 0; i < maxLen; i++)

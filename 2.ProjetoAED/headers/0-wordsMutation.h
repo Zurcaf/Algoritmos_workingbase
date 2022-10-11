@@ -3,7 +3,7 @@
 
 
 void argsCheck(int argc);
-void dictAndPalsCheck(char* argv[], char* dictLocation, char* palsLocation);
+void dictAndPalsCheck(char* argv[]);
 
 
 #endif
