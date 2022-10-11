@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "headers/1-dicionario.h"
 
 
 
-void saveDictionary(char *locationDict)
+void saveDictionary(char *locationDict, bool* palsActivation)
 {
+
     // char locationDict[] = "ficheirosTeste/dicionarios/portugues04-04-sl.dict";
     //char locationDict[] = "ficheirosTeste/dicionarios/testarContagem.dict";
     // char locationDict[] = "ficheirosTeste/dicionarios/portugues04-08.dict";
@@ -23,7 +25,7 @@ void saveDictionary(char *locationDict)
         exit(0);
     }
 
-    char word[100]; // buffer para a palavra
+    char word[40]; // buffer para a palavra
     int maxLen = 0;
     int i, j;
 
@@ -110,16 +112,18 @@ void saveDictionary(char *locationDict)
     
     fclose(dictPointer);
 
-    for(i = 0; i < maxLen; i++)
-    {
-        for (int j = 0; j < lenCount[i]; j++)
-        {
-            if(tabs[i][j] != NULL && tabs[i] !=NULL)
-            {
-                printf("%s\n", tabs[i][j]);
-            }
-        }
-    }
+    // int k = 1;
+    // for(i = 0; i < maxLen; i++)
+    // {
+    //     for (int j = 0; j < lenCount[i]; j++)
+    //     {
+    //         if(tabs[i][j] != NULL && tabs[i] !=NULL)
+    //         {
+    //             printf("%d- %s(%d)\n", k, tabs[i][j], i);
+    //             k++;
+    //         }
+    //     }
+    // }
 
 
 
@@ -143,15 +147,16 @@ void saveDictionary(char *locationDict)
 
 }
 
-void openFile()
-{
 
-}
-void fillLenCount()
-{
+// void openFile()
+// {
 
-}
-void fillTabs()
-{
+// }
+// void fillLenCount()
+// {
 
-}
+// }
+// void fillTabs()
+// {
+
+// }

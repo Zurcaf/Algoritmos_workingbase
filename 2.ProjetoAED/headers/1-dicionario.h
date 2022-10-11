@@ -2,7 +2,7 @@
 #define DICIONARIO_H
 
 //ler, alocar, guardar e ordenar dicinario
-void saveDictionary(char *locationDict);
+void saveDictionary(char *locationDict, bool *palsActivation);
 
 
 
