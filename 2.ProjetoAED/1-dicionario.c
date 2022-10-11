@@ -105,6 +105,8 @@ void saveDictionary(char *locationDict, bool* palsActivation)
     fclose(dictPointer);
 
     //dar free a tudo
+
+
     for(i = 0; i < maxLen; i++)
     {
         if (lenCount[i] > 0)
