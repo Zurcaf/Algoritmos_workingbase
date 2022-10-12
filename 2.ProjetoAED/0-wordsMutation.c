@@ -16,7 +16,7 @@ char *dictLocation=NULL, *palsLocation=NULL, *statsLocation=NULL;
 //char *locationDict="ficheirosTeste/dicionarios/portugues04-04-sl.dict";
 //char *locationDict="ficheirosTeste/dicionarios/testarContagem.dict";
 //char *locationDict="ficheirosTeste/dicionarios/portugues04-08.dict";
-bool *palsActivation=NULL;
+bool *reqPals=NULL;
 int *lenCount=NULL, i=0, j=0, maxLen=0;
 char*** tabs=NULL;
 
@@ -24,10 +24,9 @@ char*** tabs=NULL;
 argsCheck(argc);
 dictAndPalsCheck(argv);
 dictAndPalsAloc(argv, &dictLocation, &palsLocation);
-
-//savePals(palsLocation, palsActivation);
-fillPalsActivation(palsLocation, &palsActivation, &maxLen);
-saveDictionary(dictLocation, &lenCount, &tabs, maxLen, palsActivation);
+fillPalsActivation(palsLocation, &reqPals, &maxLen);
+saveDict(dictLocation, &lenCount, &tabs, maxLen, reqPals);
+sortDict(lenCount, tabs, maxLen, reqPals);
 
 
 
@@ -45,7 +44,7 @@ for (i = 0; i < maxLen; i++)
 free(lenCount);
 free(tabs);
 
-free(palsActivation);
+free(reqPals);
 free(dictLocation);
 free(palsLocation);
 
