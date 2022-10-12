@@ -10,11 +10,9 @@ int main()
     char *locationStats;
     int *lenCount;
 
-
     FILE *palsPointer;
-    char* word1, word2;
+    char *word1, word2;
     int mode;
-
 
     // abrir o ficheiro e verificar se foi aberto com sucesso
     palsPointer = (FILE *)fopen(locationStats, "r");
@@ -26,24 +24,34 @@ int main()
 
     char word[40]; // buffer para a palavra
 
-    // int i, j;
-
-    // scan dos problemas
+    // scan dos problemas e escrita da resposta em . pals.stats
     while (fscanf(palsPointer, "%s %s %d", word1, word2, mode) == 1)
     {
-        if (mode = 1)
+        fopen(locationStats = strcat(".pals", ".stats")); // ISTO ESTA MAL
+
+        if (mode = 2)
         {
         binarySearch(tabs[strlen(word1)], word1, lenCount(strleng(word1));
-        }
-        else if (mode = 2)
+        if (result = -1)
         {
-            
+                fprintf("Word is not present in the dictionary", locationStats);
+        }
+        binarySearch(tabs[strlen(word1)], word2, lenCount(strleng(word2));
+         if (result = -1)
+        {
+                fprintf("Word is not present in the dictionary", locationStats);
+        }
+        fprintf("%s %d \n %s %d", word1, \result of first bs\, word2, \result of second bs\, locationStats);
         }
 
-      // fopen(locationStats=strcat(".pals.stats"));
-
+        if (mode = 1)
+        {
+            fprintf("%d", lenCount[strlen(word1)], locationStats);
+        }
     }
+
+    fprintf(stderr, "File %s cannot be read.  Please correct.\n", locationStats);
+    exit(0);
 
     return 0;
 }
-
