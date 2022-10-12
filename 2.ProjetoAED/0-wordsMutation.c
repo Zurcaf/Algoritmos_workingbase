@@ -12,13 +12,13 @@
 
 int main(int argc, char* argv[])
 {
-char* dictLocation=NULL;
-//char* locationDict = "ficheirosTeste/dicionarios/portugues04-04-sl.dict";
-//char* locationDict = "ficheirosTeste/dicionarios/testarContagem.dict";
-//char* locationDict = "ficheirosTeste/dicionarios/portugues04-08.dict";
-char* palsLocation =NULL;
-bool* palsActivation =NULL;
-int* lenCount =NULL;
+char *dictLocation=NULL, *palsLocation=NULL, *statsLocation=NULL;
+//char *locationDict="ficheirosTeste/dicionarios/portugues04-04-sl.dict";
+//char *locationDict="ficheirosTeste/dicionarios/testarContagem.dict";
+//char *locationDict="ficheirosTeste/dicionarios/portugues04-08.dict";
+bool *palsActivation=NULL;
+int *lenCount=NULL, i=0, j=0, maxLen=0;
+char*** tabs=NULL;
 
 
 argsCheck(argc);
@@ -27,7 +27,23 @@ dictAndPalsAloc(argv, &dictLocation, &palsLocation);
 
 //savePals(palsLocation, palsActivation);
 fillPalsActivation(palsLocation, &palsActivation);
-saveDictionary(dictLocation, &lenCount, palsActivation);
+saveDictionary(dictLocation, &lenCount, &tabs, &maxLen, palsActivation);
+
+
+
+for (i = 0; i < maxLen; i++)
+{
+    if (lenCount[i] > 0)
+    {
+        for (j = 0; j < lenCount[i]; j++)
+        {
+            free(tabs[i][j]);
+        }
+        free(tabs[i]);
+    }
+}
+free(lenCount);
+free(tabs);
 
 free(palsActivation);
 free(dictLocation);
