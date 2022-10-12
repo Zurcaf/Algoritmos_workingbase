@@ -5,7 +5,7 @@
 
 #include "headers/1-dicionario.h"
 
-void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int maxLen, bool* palsActivation)
+void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, bool* palsActivation)
 {
     FILE *dictPointer;
 
@@ -104,6 +104,50 @@ void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int maxLe
     free(lenCountAux);
 }
 
+void sortDict(int *lenCount, char ***tabs, int maxLen, bool* palsActivation)
+{
+    int i, j;
+
+    for(i = 0; i < maxLen; i++)
+    {
+        if (lenCount[i] > 0 && palsActivation[i] == true)
+        {
+            qsort(tabs[i], lenCount[i], sizeof(char*), compare);
+        }
+    }
+
+    // for(i = 0; i < maxLen; i++)
+    // {
+    //     if (lenCount[i] > 0 && palsActivation[i] == true)
+    //     {
+    //         for(j = 0; j < lenCount[i]; j++)
+    //         {
+    //             printf("%s\n", tabs[i][j]);
+    //         }
+    //     }
+    // }
+    
+    for(i = 0; i < maxLen; i++)
+    {
+        if (lenCount[i] > 0)
+        {
+            for(j = 0; j < lenCount[i]; j++)
+            {
+                printf("%s\n", tabs[i][j]);
+            }
+        }
+    } 
+}
+
+int compare(const void *a, const void *b) 
+{ 
+
+// fazer o casting do void pointer para o tipo de variavél dos elementos do vector.
+    const char **str_a = (const char **)a;
+    const char **str_b = (const char **)b;
+
+    return strcmp(*str_a, *str_b); // r=0 se forem iguais. r<0 -> 'a' deve estar antes do 'b'. r>0 -> 'a' deve estar depois de 'b'.
+} 
 
 // void openFile()
 // {
