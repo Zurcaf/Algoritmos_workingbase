@@ -8,29 +8,26 @@
 #include "headers/2-pals.h"
 #include "headers/3-fileStats.h"
 
-
+//mudar para wrdmttns no make file
 
 int main(int argc, char* argv[])
 {
+char* dictLocation=NULL;
+//char* locationDict = "ficheirosTeste/dicionarios/portugues04-04-sl.dict";
+//char* locationDict = "ficheirosTeste/dicionarios/testarContagem.dict";
+//char* locationDict = "ficheirosTeste/dicionarios/portugues04-08.dict";
+char* palsLocation =NULL;
+bool* palsActivation =NULL;
+int* lenCount =NULL;
+
+
 argsCheck(argc);
-
-//mudar para wrdmttns no make file
-
-// char locationDict[] = "ficheirosTeste/dicionarios/portugues04-04-sl.dict";
-//char locationDict[] = "ficheirosTeste/dicionarios/testarContagem.dict";
-//char locationDict[] = "ficheirosTeste/dicionarios/portugues04-08.dict";
-//char locationDict = "ficheirosTeste/dicionarios/portugues04-04-sl.dict";
-//char* dictLocation = "ficheirosTeste/dicionarios/testarContagem.dict";
-char* dictLocation;
-char* palsLocation;
-bool* palsActivation=NULL;
-
 dictAndPalsCheck(argv);
 dictAndPalsAloc(argv, &dictLocation, &palsLocation);
 
 //savePals(palsLocation, palsActivation);
 fillPalsActivation(palsLocation, &palsActivation);
-saveDictionary(dictLocation, palsActivation);
+saveDictionary(dictLocation, &lenCount, palsActivation);
 
 free(palsActivation);
 free(dictLocation);
