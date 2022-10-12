@@ -1,7 +1,7 @@
 #include "headers/0-wordsMutation.h"
 
 // void getStats(char *locationStat, int *lenCount)
-void getStats(char *locationStats, int *lenCount, char ***tabs, int maxLen, bool *reqPals, char* locationPals)
+void getStats(char **locationStats, int *lenCount, char ***tabs, char *locationPals)
 {
     FILE *palsPointer = NULL, *statsPointer=NULL;
     char word1[WORD_LEN_MAX], word2[WORD_LEN_MAX]; // buffer para a palavra
@@ -15,20 +15,25 @@ void getStats(char *locationStats, int *lenCount, char ***tabs, int maxLen, bool
         exit(0);
     }
 
-    locationStats = (char*)malloc(sizeof(char) * ((strlen(locationPals)-(strlen(PALS_EXT))) + (strlen(STATS_EXT)) + 1));
-    locationStats= cutPalsPasteStats(locationPals);
+    (*locationStats) = (char*)calloc(((strlen(locationPals)-(strlen(PALS_EXT))) + (strlen(STATS_EXT)) + 1), sizeof(char));
+    if ((*locationStats) == NULL)
+    {
+        fprintf(stderr, "ERROR: not enough memory available!\n");
+        exit(4);
+    }
+    cutPals(&locationPals);
+    strcat((*locationStats), STATS_EXT);
 
-    statsPointer = (FILE *)fopen(locationStats, "w");
+    statsPointer = (FILE *)fopen((*locationStats), "w");
     if (statsPointer == (FILE *)NULL)
     {
-        fprintf(stderr, "File %s cannot be created.  Please correct.\n", locationStats);
+        fprintf(stderr, "File %s cannot be created.  Please correct.\n", (*locationStats));
         exit(0);
     }
 
     // scan dos problemas e escrita da resposta em . pals.stats
     while (fscanf(palsPointer, "%s %s %d", word1, word2, &mode) == 3)
     {
-        // fopen(locationStats = strcat(".pals", ".stats")); // ISTO ESTA MAL
         switch (mode)
         {
         case 1:
@@ -75,9 +80,7 @@ int binarySearch(char **tabs, char *nome, int n)
     }
     return -1;
 }
-char* cutPalsPasteStats(char *locationPals)
+void cutPals(char **locationPals)
 {
-    locationPals[strlen(locationPals) - strlen(PALS_EXT)] = '\0';
-    strcat(locationPals, STATS_EXT);
-    return locationPals;
+    (*locationPals)[strlen(*locationPals) - strlen(PALS_EXT)] = '\0';
 }

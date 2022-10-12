@@ -19,7 +19,7 @@ dictAndPalsAloc(argv, &dictLocation, &palsLocation);
 fillReqPals(palsLocation, &reqPals, &maxLen);
 saveDict(dictLocation, &lenCount, &tabs, maxLen, reqPals);
 sortDict(lenCount, tabs, maxLen, reqPals);
-getStats(statsLocation, lenCount, tabs, maxLen, reqPals, palsLocation);
+getStats(&statsLocation, lenCount, tabs, palsLocation);
 
 
 for (i = 0; i < maxLen; i++)
@@ -112,7 +112,7 @@ void fillReqPals(char *palsLocation, bool **palsActivation, int *maxLen)
 {
     FILE *fp=NULL;
     char word1[WORD_LEN_MAX] = {0}, word2[WORD_LEN_MAX] = {0};
-    int i=0, mode;
+    int i=0, mode=0;
 
     fp = fopen(palsLocation, "r");
     if (fp == NULL)

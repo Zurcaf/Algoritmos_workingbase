@@ -2,7 +2,7 @@
 
 void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, bool* palsActivation)
 {
-    FILE *dictPointer;
+    FILE *dictPointer=NULL;
 
     // abrir o ficheiro e verificar se foi aberto com sucesso
     dictPointer = (FILE *)fopen(locationDict, "r");
@@ -13,7 +13,7 @@ void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, boo
     }
 
     char word[WORD_LEN_MAX]; // buffer para a palavra
-    int i, j; // variaveis auxiliares
+    int i=0, j=0; // variaveis auxiliares
     bool flag = false; 
 
     //criar array de inteiros para guardar as ocorrencias de cada tamanho de palavra
@@ -74,7 +74,7 @@ void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, boo
         }
     }
     
-    int* lenCountAux;
+    int* lenCountAux = NULL;
 
     lenCountAux = (int*)calloc(maxLen, sizeof(int));
     if ((*lenCount) == NULL)
