@@ -5,7 +5,7 @@
 
 #include "headers/1-dicionario.h"
 
-void saveDictionary(char *locationDict, bool* palsActivation)
+void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int maxLen, bool* palsActivation)
 {
     FILE *dictPointer;
 
@@ -18,65 +18,59 @@ void saveDictionary(char *locationDict, bool* palsActivation)
     }
 
     char word[40]; // buffer para a palavra
-    int maxLen = 0;
-    int i, j;
-
-    //fazer scan do dicionario
-    while (fscanf(dictPointer, " %s ", word) == 1)
-    {
-        if (strlen(word) > maxLen)
-        {
-            maxLen = strlen(word);
-        }
-    }
-
-    //acerto do tamanho maximo para alocação dos vetores
-    maxLen++;
-
-    rewind(dictPointer);
+    int i, j; // variaveis auxiliares
+    bool flag = false; 
 
     //criar array de inteiros para guardar as ocorrencias de cada tamanho de palavra
-    int* lenCount;
-    lenCount = (int*)calloc(maxLen, sizeof(int));
-    if (lenCount == NULL)
+    (*lenCount) = (int*)calloc(maxLen, sizeof(int));
+    if ((*lenCount) == NULL)
     {
         fprintf(stderr, "ERROR: not enough memory available!\n");
         exit(4);
     }
     
-    //criar ponteiro para array de strings para guardar diferentes tamanhos de palavras
-    char*** tabs;
-    tabs = (char***)calloc(maxLen, sizeof(char**));
-    if (tabs == NULL)
+    //Alocar tabs *** para cada tananho inicializado
+    (*tabs) = (char***)calloc(maxLen, sizeof(char**));
+    if ((*tabs) == NULL)
     {
         fprintf(stderr, "ERROR: not enough memory available!\n");
         exit(4);
     }
 
     //preencher lenCount com o numero de ocorrencias de cada tamanho de palavra
-    while (fscanf(dictPointer, " %s ", word) == 1)
-    {    
-        lenCount[strlen(word)]++;
+    while (fscanf(dictPointer, "%s", word) == 1)
+    {
+        if(strlen(word)< maxLen && palsActivation[strlen(word)] == true)
+        {
+            (*lenCount)[strlen(word)]++;
+        }
+        flag = true;
     }
 
+    if(flag == false)
+    {
+        fprintf(stderr, "ERROR: no words in file!(.dict)\n");
+        exit(6);
+    }
+    
     rewind(dictPointer);
 
     for(i = 0; i < maxLen; i++)
     {
-        if (lenCount[i] > 0)
+        if ((*lenCount)[i] > 0)
         {
             //alocar memoria para o array de palavras com o tamanho i
-            tabs[i] = (char**)calloc(lenCount[i], sizeof(char*));
-            if (tabs[i] == NULL)
+            (*tabs)[i] = (char**)calloc((*lenCount)[i], sizeof(char*));
+            if ((*tabs)[i] == NULL)
             {
                 fprintf(stderr, "ERROR: not enough memory available!\n");
                 exit(4);
             }
-            for(j=0; j<lenCount[i]; j++)
+            for(j=0; j<(*lenCount)[i]; j++)
             {
                 //alocar memoria para cada palavra com o tamanho i
-                tabs[i][j] = (char*)calloc(i+1, sizeof(char));
-                if (tabs[i][j] == NULL)
+                (*tabs)[i][j] = (char*)calloc(i+1, sizeof(char));
+                if ((*tabs)[i][j] == NULL)
                 {
                     fprintf(stderr, "ERROR: not enough memory available!\n");
                     exit(4);
@@ -88,38 +82,26 @@ void saveDictionary(char *locationDict, bool* palsActivation)
     int* lenCountAux;
 
     lenCountAux = (int*)calloc(maxLen, sizeof(int));
-    if (lenCount == NULL)
+    if ((*lenCount) == NULL)
     {
         fprintf(stderr, "ERROR: not enough memory available!\n");
         exit(4);
     }
 
 
-    while (fscanf(dictPointer, " %s ", word) == 1)
+    while (fscanf(dictPointer, "%s", word) == 1)
     {    
-
-        strcpy(tabs[strlen(word)][lenCountAux[strlen(word)]], word);
-        lenCountAux[strlen(word)]++;
+        if(strlen(word)< maxLen && palsActivation[strlen(word)] == true)
+        {
+            strcpy((*tabs)[strlen(word)][lenCountAux[strlen(word)]], word);
+            lenCountAux[strlen(word)]++;
+        }
     }
     
     fclose(dictPointer);
 
     //dar free a tudo
-    for(i = 0; i < maxLen; i++)
-    {
-        if (lenCount[i] > 0)
-        {
-            for(j=0; j<lenCount[i]; j++)
-            {
-                free(tabs[i][j]);
-            }
-            free(tabs[i]);
-        }
-    }
-    free(lenCount);
     free(lenCountAux);
-    free(tabs);
-
 }
 
 
@@ -131,7 +113,7 @@ void saveDictionary(char *locationDict, bool* palsActivation)
 // {
 
 // }
-// void fillTabs()
+// void fill()
 // {
 
 // }

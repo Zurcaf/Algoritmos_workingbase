@@ -6,45 +6,46 @@
 #include "headers/0-wordsMutation.h"
 #include "headers/1-dicionario.h"
 #include "headers/2-pals.h"
-
-#define DICT_EXT ".dict"
-#define PALS_EXT ".pals"
-
-int main(int argc, char* argv[])
-{
-argsCheck(argc);
+#include "headers/3-fileStats.h"
 
 //mudar para wrdmttns no make file
 
-// char locationDict[] = "ficheirosTeste/dicionarios/portugues04-04-sl.dict";
-//char locationDict[] = "ficheirosTeste/dicionarios/testarContagem.dict";
-// char locationDict[] = "ficheirosTeste/dicionarios/portugues04-08.dict";
-// char locationDict[] = "ficheirosTeste/dicionarios/portugues04-04-sl.dict";
-//char* dictLocation = "ficheirosTeste/dicionarios/testarContagem.dict";
-char* dictLocation;
-char* palsLocation;
-bool* palsActivation = NULL;
+int main(int argc, char* argv[])
+{
+char *dictLocation=NULL, *palsLocation=NULL, *statsLocation=NULL;
+//char *locationDict="ficheirosTeste/dicionarios/portugues04-04-sl.dict";
+//char *locationDict="ficheirosTeste/dicionarios/testarContagem.dict";
+//char *locationDict="ficheirosTeste/dicionarios/portugues04-08.dict";
+bool *palsActivation=NULL;
+int *lenCount=NULL, i=0, j=0, maxLen=0;
+char*** tabs=NULL;
 
+
+argsCheck(argc);
 dictAndPalsCheck(argv);
-dictLocation = (char *)malloc((strlen(argv[1]) + 1) * sizeof(char));
-if (dictLocation == NULL)
+dictAndPalsAloc(argv, &dictLocation, &palsLocation);
+
+//savePals(palsLocation, palsActivation);
+fillPalsActivation(palsLocation, &palsActivation, &maxLen);
+saveDictionary(dictLocation, &lenCount, &tabs, maxLen, palsActivation);
+
+
+
+for (i = 0; i < maxLen; i++)
 {
-    fprintf(stderr, "ERROR: not enough memory available!\n");
-    exit(4);
+    if (lenCount[i] > 0)
+    {
+        for (j = 0; j < lenCount[i]; j++)
+        {
+            free(tabs[i][j]);
+        }
+        free(tabs[i]);
+    }
 }
-strcpy(dictLocation, argv[1]);
+free(lenCount);
+free(tabs);
 
-palsLocation = (char *)malloc((strlen(argv[2]) + 1) * sizeof(char));
-if (palsLocation == NULL)
-{
-    fprintf(stderr, "ERROR: not enough memory available!\n");
-    exit(4);
-}
-
-savePals(palsLocation, palsActivation);
-saveDictionary(dictLocation, palsActivation);
-
-
+free(palsActivation);
 free(dictLocation);
 free(palsLocation);
 
@@ -94,4 +95,79 @@ void dictAndPalsCheck(char *argv[])
         }
 
     }
+}
+
+void dictAndPalsAloc(char *argv[], char **dictLocation, char **palsLocation)
+{
+    *dictLocation = (char *)malloc((strlen(argv[1]) + 1) * sizeof(char));
+    if (*dictLocation == NULL)
+    {
+        fprintf(stderr, "ERROR: not enough memory available!\n");
+        exit(4);
+    }
+    strcpy(*dictLocation, argv[1]);
+
+    *palsLocation = (char *)malloc((strlen(argv[2]) + 1) * sizeof(char));
+    if (*palsLocation == NULL)
+    {
+        fprintf(stderr, "ERROR: not enough memory available!\n");
+        exit(4);
+    }
+    strcpy(*palsLocation, argv[2]);
+}
+
+void fillPalsActivation(char *palsLocation, bool **palsActivation, int *maxLen)
+{
+    FILE *fp=NULL;
+    char word[40] = {0};
+    int i=0;
+
+    fp = fopen(palsLocation, "r");
+    if (fp == NULL)
+    {     
+        fprintf(stderr, "ERROR: could not open file!(.pals)\n");
+        exit(5);
+    }
+
+    while (fscanf(fp, "%s", word) == 1)
+    {
+        if(strlen(word) > (*maxLen))
+        {
+            (*maxLen) = strlen(word);
+        }
+    }
+    if ((*maxLen) == 0)
+    {
+        fprintf(stderr, "ERROR: no words in file!\n");
+        exit(6);
+    }
+
+    (*maxLen)++;
+
+    *palsActivation = (bool *)malloc((*maxLen)+1 * sizeof(bool));
+    if (*palsActivation == NULL)
+    {
+        fprintf(stderr, "ERROR: not enough memory available!\n");
+        exit(4);
+    }
+
+    rewind(fp);
+
+    for(i=0; i<(*maxLen); i++)
+    {
+        (*palsActivation)[i] = false;   
+    }
+
+    while (fscanf(fp, "%s", word) == 1)
+    {
+        (*palsActivation)[strlen(word)] = true;
+    }
+
+    for(int i=0; i<(*maxLen); i++)
+    {
+        printf("%d ", (*palsActivation)[i]);
+    }
+            printf("\n");
+
+    fclose(fp);
 }
