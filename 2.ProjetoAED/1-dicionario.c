@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-
-#include "headers/1-dicionario.h"
+#include "headers/0-wordsMutation.h"
 
 void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, bool* palsActivation)
 {
@@ -17,7 +12,7 @@ void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, boo
         exit(0);
     }
 
-    char word[40]; // buffer para a palavra
+    char word[WORD_LEN_MAX]; // buffer para a palavra
     int i, j; // variaveis auxiliares
     bool flag = false; 
 
@@ -104,10 +99,9 @@ void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, boo
     free(lenCountAux);
 }
 
-void sortDict(int *lenCount, char ***tabs, int maxLen, bool* palsActivation)
+void sortDict(int *lenCount, char ***tabs, int maxLen, bool *palsActivation)
 {
-    int i, j;
-
+    int i;
     for(i = 0; i < maxLen; i++)
     {
         if (lenCount[i] > 0 && palsActivation[i] == true)
@@ -115,28 +109,18 @@ void sortDict(int *lenCount, char ***tabs, int maxLen, bool* palsActivation)
             qsort(tabs[i], lenCount[i], sizeof(char*), compare);
         }
     }
-
+    
+    // int j;
     // for(i = 0; i < maxLen; i++)
     // {
-    //     if (lenCount[i] > 0 && palsActivation[i] == true)
+    //     if (lenCount[i] > 0)
     //     {
     //         for(j = 0; j < lenCount[i]; j++)
     //         {
     //             printf("%s\n", tabs[i][j]);
     //         }
     //     }
-    // }
-    
-    for(i = 0; i < maxLen; i++)
-    {
-        if (lenCount[i] > 0)
-        {
-            for(j = 0; j < lenCount[i]; j++)
-            {
-                printf("%s\n", tabs[i][j]);
-            }
-        }
-    } 
+    // } 
 }
 
 int compare(const void *a, const void *b) 

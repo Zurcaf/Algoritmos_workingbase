@@ -1,12 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-
 #include "headers/0-wordsMutation.h"
-#include "headers/1-dicionario.h"
-#include "headers/2-pals.h"
-#include "headers/3-fileStats.h"
 
 //mudar para wrdmttns no make file
 
@@ -24,10 +16,10 @@ char*** tabs=NULL;
 argsCheck(argc);
 dictAndPalsCheck(argv);
 dictAndPalsAloc(argv, &dictLocation, &palsLocation);
-fillPalsActivation(palsLocation, &reqPals, &maxLen);
+fillReqPals(palsLocation, &reqPals, &maxLen);
 saveDict(dictLocation, &lenCount, &tabs, maxLen, reqPals);
 sortDict(lenCount, tabs, maxLen, reqPals);
-
+getStats(statsLocation, lenCount, tabs, maxLen, reqPals, palsLocation);
 
 
 for (i = 0; i < maxLen; i++)
@@ -45,6 +37,7 @@ free(lenCount);
 free(tabs);
 
 free(reqPals);
+free(statsLocation);
 free(dictLocation);
 free(palsLocation);
 
@@ -115,11 +108,11 @@ void dictAndPalsAloc(char *argv[], char **dictLocation, char **palsLocation)
     strcpy(*palsLocation, argv[2]);
 }
 
-void fillPalsActivation(char *palsLocation, bool **palsActivation, int *maxLen)
+void fillReqPals(char *palsLocation, bool **palsActivation, int *maxLen)
 {
     FILE *fp=NULL;
-    char word[40] = {0};
-    int i=0;
+    char word1[WORD_LEN_MAX] = {0}, word2[WORD_LEN_MAX] = {0};
+    int i=0, mode;
 
     fp = fopen(palsLocation, "r");
     if (fp == NULL)
@@ -128,16 +121,17 @@ void fillPalsActivation(char *palsLocation, bool **palsActivation, int *maxLen)
         exit(5);
     }
 
-    while (fscanf(fp, "%s", word) == 1)
+    while (fscanf(fp, "%s %s %d", word1, word2, &mode) == 3)
     {
-        if(strlen(word) > (*maxLen))
+        if(strlen(word1) > (*maxLen))
         {
-            (*maxLen) = strlen(word);
+            (*maxLen) = strlen(word1);
         }
+//        printf("word1: %s word2: %s mode: %d maxLen: %d\n", word1, word2, mode, (*maxLen));
     }
     if ((*maxLen) == 0)
     {
-        fprintf(stderr, "ERROR: no words in file!\n");
+        fprintf(stderr, "ERROR: no words in file!(maxlen)\n");
         exit(6);
     }
 
@@ -157,16 +151,16 @@ void fillPalsActivation(char *palsLocation, bool **palsActivation, int *maxLen)
         (*palsActivation)[i] = false;   
     }
 
-    while (fscanf(fp, "%s", word) == 1)
+    while (fscanf(fp, "%s %s %d", word1, word2, &mode) == 3)
     {
-        (*palsActivation)[strlen(word)] = true;
+        (*palsActivation)[strlen(word1)] = true;
     }
 
-    for(int i=0; i<(*maxLen); i++)
-    {
-        printf("%d ", (*palsActivation)[i]);
-    }
-            printf("\n");
+    // for(int i=0; i<(*maxLen); i++)
+    // {
+    //     printf("%d ", (*palsActivation)[i]);
+    // }
+    //         printf("\n");
 
     fclose(fp);
 }

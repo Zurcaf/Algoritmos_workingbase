@@ -1,25 +1,83 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-
-#include "headers/3-fileStats.h"
+#include "headers/0-wordsMutation.h"
 
 // void getStats(char *locationStat, int *lenCount)
-void getStats(char *locationStat)
+void getStats(char *locationStats, int *lenCount, char ***tabs, int maxLen, bool *reqPals, char* locationPals)
 {
-    int *lenCount;
-    FILE *palsPointer;
+    FILE *palsPointer = NULL, *statsPointer=NULL;
+    char word1[WORD_LEN_MAX], word2[WORD_LEN_MAX]; // buffer para a palavra
+    int mode=0, bsResult1=-2, bsResult2=-2;
 
-        // abrir o ficheiro e verificar se foi aberto com sucesso
-    palsPointer = (FILE *)fopen(locationStat, "r");
+    // abrir o ficheiro e verificar se foi aberto com sucesso
+    palsPointer = (FILE *)fopen(locationPals, "r");
     if (palsPointer == (FILE *)NULL)
     {
-        fprintf(stderr, "File %s cannot be read.  Please correct.\n", locationStat);
+        fprintf(stderr, "File %s cannot be read.  Please correct.\n", locationPals);
         exit(0);
     }
 
-    char word[40]; // buffer para a palavra
-    
-    // int i, j;
+    locationStats = (char*)malloc(sizeof(char) * ((strlen(locationPals)-(strlen(PALS_EXT))) + (strlen(STATS_EXT)) + 1));
+    locationStats= cutPalsPasteStats(locationPals);
+
+    statsPointer = (FILE *)fopen(locationStats, "w");
+    if (statsPointer == (FILE *)NULL)
+    {
+        fprintf(stderr, "File %s cannot be created.  Please correct.\n", locationStats);
+        exit(0);
+    }
+
+    // scan dos problemas e escrita da resposta em . pals.stats
+    while (fscanf(palsPointer, "%s %s %d", word1, word2, &mode) == 3)
+    {
+        // fopen(locationStats = strcat(".pals", ".stats")); // ISTO ESTA MAL
+        switch (mode)
+        {
+        case 1:
+        {
+            fprintf(statsPointer, "%s %d\n\n", word1, lenCount[strlen(word1)]);
+        }
+        break;
+        case 2:
+        {
+            bsResult1 = binarySearch(tabs[strlen(word1)], word1, lenCount[strlen(word1)]);
+            bsResult2 = binarySearch(tabs[strlen(word2)], word2, lenCount[strlen(word2)]);
+            if (bsResult1 == -1 || bsResult2 == -1)
+                fprintf(statsPointer, "%s %s %d\n\n", word1, word2, mode);
+            else
+                fprintf(statsPointer, "%s %d\n%s %d\n\n", word1, bsResult1, word2, bsResult2);
+        }
+        break;
+        default:
+            fprintf(statsPointer, "%s %s %d\n\n", word1, word2, mode);
+            break;
+        }
+    }
+    fclose(palsPointer);
+    fclose(statsPointer);
+}
+
+
+int binarySearch(char **tabs, char *nome, int n)
+{
+    int lower = 0;
+    int upper = n - 1;
+    while (lower <= upper)
+    {
+        int mid = lower + (upper - lower) / 2;
+        int res;
+        if (strcmp(nome, (tabs[mid])) == 0)
+            res = 0;
+        if (res == 0)
+            return mid;
+        if (strcmp(nome, (tabs[mid])) > 0)
+            lower = mid + 1;
+        else
+            upper = mid - 1;
+    }
+    return -1;
+}
+char* cutPalsPasteStats(char *locationPals)
+{
+    locationPals[strlen(locationPals) - strlen(PALS_EXT)] = '\0';
+    strcat(locationPals, STATS_EXT);
+    return locationPals;
 }

@@ -5,17 +5,16 @@
 
 int main()
 {
-
     // void getStats(char *locationStats, int *lenCount)
     char *locationStats;
     int *lenCount;
 
     FILE *palsPointer;
-    char *word1, word2;
+    char *word1[WORD_LEN_MAX], word2;
     int mode;
 
     // abrir o ficheiro e verificar se foi aberto com sucesso
-    palsPointer = (FILE *)fopen(locationStats, "r");
+    palsPointer = (FILE *)fopen(locationPals, "r");
     if (palsPointer == (FILE *)NULL)
     {
         fprintf(stderr, "File %s cannot be read.  Please correct.\n", locationStats);

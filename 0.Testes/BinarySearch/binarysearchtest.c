@@ -1,7 +1,4 @@
-
-
 #include <stdio.h>
-
 #include <string.h>
 
 int binarySearchString(char tabs[5][5], char *nome, int n)
