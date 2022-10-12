@@ -5,7 +5,7 @@
 
 #include "headers/1-dicionario.h"
 
-void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int *maxLen, bool* palsActivation)
+void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int maxLen, bool* palsActivation)
 {
     FILE *dictPointer;
 
@@ -20,22 +20,11 @@ void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int *maxL
     char word[40]; // buffer para a palavra
     int i, j;
 
-    //fazer scan do dicionario
-    while (fscanf(dictPointer, "%s", word) == 1)
-    {
-        if (strlen(word) > (*maxLen))
-        {
-            (*maxLen) = strlen(word);
-        }
-    }
-
-    //acerto do tamanho maximo para alocação dos vetores
-    (*maxLen)++;
 
     rewind(dictPointer);
 
     //criar array de inteiros para guardar as ocorrencias de cada tamanho de palavra
-    (*lenCount) = (int*)calloc((*maxLen), sizeof(int));
+    (*lenCount) = (int*)calloc(maxLen, sizeof(int));
     if ((*lenCount) == NULL)
     {
         fprintf(stderr, "ERROR: not enough memory available!\n");
@@ -43,7 +32,7 @@ void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int *maxL
     }
     
     //Alocar tabs *** para cada tananho inicializado
-    (*tabs) = (char***)calloc((*maxLen), sizeof(char**));
+    (*tabs) = (char***)calloc(maxLen, sizeof(char**));
     if ((*tabs) == NULL)
     {
         fprintf(stderr, "ERROR: not enough memory available!\n");
@@ -52,13 +41,16 @@ void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int *maxL
 
     //preencher lenCount com o numero de ocorrencias de cada tamanho de palavra
     while (fscanf(dictPointer, "%s", word) == 1)
-    {    
-        (*lenCount)[strlen(word)]++;
+    {
+        if(strlen(word)< maxLen && palsActivation[strlen(word)] == true)
+        {
+            (*lenCount)[strlen(word)]++;
+        }
     }
 
     rewind(dictPointer);
 
-    for(i = 0; i < (*maxLen); i++)
+    for(i = 0; i < maxLen; i++)
     {
         if ((*lenCount)[i] > 0)
         {
@@ -84,7 +76,7 @@ void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int *maxL
     
     int* lenCountAux;
 
-    lenCountAux = (int*)calloc((*maxLen), sizeof(int));
+    lenCountAux = (int*)calloc(maxLen, sizeof(int));
     if ((*lenCount) == NULL)
     {
         fprintf(stderr, "ERROR: not enough memory available!\n");
@@ -94,9 +86,11 @@ void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int *maxL
 
     while (fscanf(dictPointer, "%s", word) == 1)
     {    
-
-        strcpy((*tabs)[strlen(word)][lenCountAux[strlen(word)]], word);
-        lenCountAux[strlen(word)]++;
+        if(strlen(word)< maxLen && palsActivation[strlen(word)] == true)
+        {
+            strcpy((*tabs)[strlen(word)][lenCountAux[strlen(word)]], word);
+            lenCountAux[strlen(word)]++;
+        }
     }
     
     fclose(dictPointer);

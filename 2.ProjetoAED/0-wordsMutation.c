@@ -27,7 +27,7 @@ dictAndPalsAloc(argv, &dictLocation, &palsLocation);
 
 //savePals(palsLocation, palsActivation);
 fillPalsActivation(palsLocation, &palsActivation, &maxLen);
-saveDictionary(dictLocation, &lenCount, &tabs, &maxLen, palsActivation);
+saveDictionary(dictLocation, &lenCount, &tabs, maxLen, palsActivation);
 
 
 
