@@ -5,9 +5,6 @@
 int main(int argc, char* argv[])
 {
 char *dictLocation=NULL, *palsLocation=NULL, *statsLocation=NULL;
-//char *locationDict="ficheirosTeste/dicionarios/portugues04-04-sl.dict";
-//char *locationDict="ficheirosTeste/dicionarios/testarContagem.dict";
-//char *locationDict="ficheirosTeste/dicionarios/portugues04-08.dict";
 bool *reqPals=NULL;
 int *lenCount=NULL, i=0, j=0, maxLen=0;
 char*** tabs=NULL;
@@ -131,7 +128,7 @@ void fillReqPals(char *palsLocation, bool **palsActivation, int *maxLen)
     }
     if ((*maxLen) == 0)
     {
-        fprintf(stderr, "ERROR: no words in file!(maxlen)\n");
+        fprintf(stderr, "ERROR: no words in file!(.pals)\n");
         exit(6);
     }
 
