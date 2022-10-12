@@ -7,6 +7,11 @@ void getStats(char **locationStats, int *lenCount, char ***tabs, char *locationP
     char word1[WORD_LEN_MAX], word2[WORD_LEN_MAX]; // buffer para a palavra
     int mode=0, bsResult1=-2, bsResult2=-2;
 
+    for(int i=0; i<WORD_LEN_MAX; i++)
+    {
+        word1[i] = '\0';
+        word2[i] = '\0';
+    }
     // abrir o ficheiro e verificar se foi aberto com sucesso
     palsPointer = (FILE *)fopen(locationPals, "r");
     if (palsPointer == (FILE *)NULL)
@@ -22,6 +27,7 @@ void getStats(char **locationStats, int *lenCount, char ***tabs, char *locationP
         exit(4);
     }
     cutPals(&locationPals);
+    strcpy((*locationStats), locationPals);
     strcat((*locationStats), STATS_EXT);
 
     statsPointer = (FILE *)fopen((*locationStats), "w");
@@ -34,21 +40,27 @@ void getStats(char **locationStats, int *lenCount, char ***tabs, char *locationP
     // scan dos problemas e escrita da resposta em . pals.stats
     while (fscanf(palsPointer, "%s %s %d", word1, word2, &mode) == 3)
     {
+        bsResult1 = binarySearch(tabs[strlen(word1)], word1, lenCount[strlen(word1)]);
+        bsResult2 = binarySearch(tabs[strlen(word2)], word2, lenCount[strlen(word2)]);
+        if(strelen(word1)!=strelen(word2))
+            mode=3;
+
         switch (mode)
         {
         case 1:
         {
-            fprintf(statsPointer, "%s %d\n\n", word1, lenCount[strlen(word1)]);
+            if (bsResult1 == -1 || bsResult2 == -1)
+                fprintf(statsPointer, "%s %s %d \n \n", word1, word2, mode);
+            else
+                fprintf(statsPointer, "%s %d\n\n", word1, lenCount[strlen(word1)]);
         }
         break;
         case 2:
         {
-            bsResult1 = binarySearch(tabs[strlen(word1)], word1, lenCount[strlen(word1)]);
-            bsResult2 = binarySearch(tabs[strlen(word2)], word2, lenCount[strlen(word2)]);
             if (bsResult1 == -1 || bsResult2 == -1)
-                fprintf(statsPointer, "%s %s %d\n\n", word1, word2, mode);
+                fprintf(statsPointer, "%s %s %d \n \n", word1, word2, mode);
             else
-                fprintf(statsPointer, "%s %d\n%s %d\n\n", word1, bsResult1, word2, bsResult2);
+                fprintf(statsPointer, "%s %d \n%s %d \n \n", word1, bsResult1, word2, bsResult2);
         }
         break;
         default:
@@ -56,8 +68,8 @@ void getStats(char **locationStats, int *lenCount, char ***tabs, char *locationP
             break;
         }
     }
-    fclose(palsPointer);
     fclose(statsPointer);
+    fclose(palsPointer);
 }
 
 
@@ -65,10 +77,11 @@ int binarySearch(char **tabs, char *nome, int n)
 {
     int lower = 0;
     int upper = n - 1;
+    int mid = lower + (upper - lower) / 2;
+    int res =1;
     while (lower <= upper)
     {
-        int mid = lower + (upper - lower) / 2;
-        int res;
+        mid = lower + (upper - lower) / 2;
         if (strcmp(nome, (tabs[mid])) == 0)
             res = 0;
         if (res == 0)
@@ -82,5 +95,5 @@ int binarySearch(char **tabs, char *nome, int n)
 }
 void cutPals(char **locationPals)
 {
-    (*locationPals)[strlen(*locationPals) - strlen(PALS_EXT)] = '\0';
+    (*locationPals)[(strlen(*locationPals) - strlen(PALS_EXT))] = '\0';
 }
