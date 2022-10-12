@@ -8,6 +8,6 @@
 void argsCheck(int argc);
 void dictAndPalsCheck(char* argv[]);
 void dictAndPalsAloc(char *argv[], char **dictLocation, char **palsLocation);
-void fillPalsActivation(char *palsLocation, bool **palsActivation);
+void fillPalsActivation(char *palsLocation, bool **palsActivation, int *maxLen);
 
 #endif

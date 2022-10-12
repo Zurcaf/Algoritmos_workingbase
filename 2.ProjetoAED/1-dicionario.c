@@ -21,7 +21,7 @@ void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int *maxL
     int i, j;
 
     //fazer scan do dicionario
-    while (fscanf(dictPointer, " %s ", word) == 1)
+    while (fscanf(dictPointer, "%s", word) == 1)
     {
         if (strlen(word) > (*maxLen))
         {
@@ -51,7 +51,7 @@ void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int *maxL
     }
 
     //preencher lenCount com o numero de ocorrencias de cada tamanho de palavra
-    while (fscanf(dictPointer, " %s ", word) == 1)
+    while (fscanf(dictPointer, "%s", word) == 1)
     {    
         (*lenCount)[strlen(word)]++;
     }
@@ -92,7 +92,7 @@ void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int *maxL
     }
 
 
-    while (fscanf(dictPointer, " %s ", word) == 1)
+    while (fscanf(dictPointer, "%s", word) == 1)
     {    
 
         strcpy((*tabs)[strlen(word)][lenCountAux[strlen(word)]], word);

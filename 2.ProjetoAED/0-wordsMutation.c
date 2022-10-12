@@ -26,7 +26,7 @@ dictAndPalsCheck(argv);
 dictAndPalsAloc(argv, &dictLocation, &palsLocation);
 
 //savePals(palsLocation, palsActivation);
-fillPalsActivation(palsLocation, &palsActivation);
+fillPalsActivation(palsLocation, &palsActivation, &maxLen);
 saveDictionary(dictLocation, &lenCount, &tabs, &maxLen, palsActivation);
 
 
@@ -116,11 +116,11 @@ void dictAndPalsAloc(char *argv[], char **dictLocation, char **palsLocation)
     strcpy(*palsLocation, argv[2]);
 }
 
-void fillPalsActivation(char *palsLocation, bool **palsActivation)
+void fillPalsActivation(char *palsLocation, bool **palsActivation, int *maxLen)
 {
     FILE *fp=NULL;
     char word[40] = {0};
-    int i=0, maxLen=0;
+    int i=0;
 
     fp = fopen(palsLocation, "r");
     if (fp == NULL)
@@ -131,20 +131,20 @@ void fillPalsActivation(char *palsLocation, bool **palsActivation)
 
     while (fscanf(fp, "%s", word) == 1)
     {
-        if(strlen(word) > maxLen)
+        if(strlen(word) > (*maxLen))
         {
-            maxLen = strlen(word);
+            (*maxLen) = strlen(word);
         }
     }
-    if (maxLen == 0)
+    if ((*maxLen) == 0)
     {
         fprintf(stderr, "ERROR: no words in file!\n");
         exit(6);
     }
 
-    maxLen++;
+    (*maxLen)++;
 
-    *palsActivation = (bool *)malloc(maxLen+1 * sizeof(bool));
+    *palsActivation = (bool *)malloc((*maxLen)+1 * sizeof(bool));
     if (*palsActivation == NULL)
     {
         fprintf(stderr, "ERROR: not enough memory available!\n");
@@ -153,7 +153,7 @@ void fillPalsActivation(char *palsLocation, bool **palsActivation)
 
     rewind(fp);
 
-    for(i=0; i<maxLen; i++)
+    for(i=0; i<(*maxLen); i++)
     {
         (*palsActivation)[i] = false;   
     }
@@ -163,13 +163,11 @@ void fillPalsActivation(char *palsLocation, bool **palsActivation)
         (*palsActivation)[strlen(word)] = true;
     }
 
-    for(int i=0; i<maxLen; i++)
+    for(int i=0; i<(*maxLen); i++)
     {
         printf("%d ", (*palsActivation)[i]);
     }
             printf("\n");
-
-    
 
     fclose(fp);
 }
