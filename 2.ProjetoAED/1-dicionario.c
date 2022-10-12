@@ -18,10 +18,8 @@ void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int maxLe
     }
 
     char word[40]; // buffer para a palavra
-    int i, j;
-
-
-    rewind(dictPointer);
+    int i, j; // variaveis auxiliares
+    bool flag = false; 
 
     //criar array de inteiros para guardar as ocorrencias de cada tamanho de palavra
     (*lenCount) = (int*)calloc(maxLen, sizeof(int));
@@ -46,8 +44,15 @@ void saveDictionary(char *locationDict, int** lenCount, char ****tabs, int maxLe
         {
             (*lenCount)[strlen(word)]++;
         }
+        flag = true;
     }
 
+    if(flag == false)
+    {
+        fprintf(stderr, "ERROR: no words in file!(.dict)\n");
+        exit(6);
+    }
+    
     rewind(dictPointer);
 
     for(i = 0; i < maxLen; i++)
