@@ -1,4 +1,4 @@
-#include "headers/0-wordsMutation.h"
+#include "0-wordsMutation.h"
 
 void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, bool* palsActivation)
 {

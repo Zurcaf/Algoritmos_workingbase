@@ -1,4 +1,4 @@
-#include "headers/0-wordsMutation.h"
+#include "0-wordsMutation.h"
 
 //mudar para wrdmttns no make file
 
@@ -16,7 +16,7 @@ dictAndPalsAloc(argv, &dictLocation, &palsLocation);
 fillReqPals(palsLocation, &reqPals, &maxLen);
 saveDict(dictLocation, &lenCount, &tabs, maxLen, reqPals);
 sortDict(lenCount, tabs, maxLen, reqPals);
-getStats(&statsLocation, lenCount, tabs, palsLocation);
+getStats(&statsLocation, lenCount, tabs, palsLocation, maxLen);
 
 
 for (i = 0; i < maxLen; i++)

@@ -1,7 +1,7 @@
-#include "headers/0-wordsMutation.h"
+#include "0-wordsMutation.h"
 
 // void getStats(char *locationStat, int *lenCount)
-void getStats(char **locationStats, int *lenCount, char ***tabs, char *locationPals)
+void getStats(char **locationStats, int *lenCount, char ***tabs, char *locationPals, int lenMax)
 {
     FILE *palsPointer = NULL, *statsPointer=NULL;
     char word1[WORD_LEN_MAX], word2[WORD_LEN_MAX]; // buffer para a palavra
@@ -40,10 +40,13 @@ void getStats(char **locationStats, int *lenCount, char ***tabs, char *locationP
     // scan dos problemas e escrita da resposta em . pals.stats
     while (fscanf(palsPointer, "%s %s %d", word1, word2, &mode) == 3)
     {
+        if(strlen(word1)!=strlen(word2) || strlen(word1) > (lenMax-1) || strlen(word2) > (lenMax-1))
+            mode=3;
+        else
+        {
         bsResult1 = binarySearch(tabs[strlen(word1)], word1, lenCount[strlen(word1)]);
         bsResult2 = binarySearch(tabs[strlen(word2)], word2, lenCount[strlen(word2)]);
-        if(strelen(word1)!=strelen(word2))
-            mode=3;
+        }
 
         switch (mode)
         {

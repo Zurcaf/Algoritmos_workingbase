@@ -12,16 +12,16 @@ gdb: 0-wordsMutation.o 1-dicionario.o 2-pals.o 3-fileStats.o
 
 
 
-0-wordsMutations.o: 0-wordsMutation.c headers/0-wordsMutation.h headers/1-dicionario.h headers/2-pals.h headers/3-fileStats.h
+0-wordsMutations.o: 0-wordsMutation.c  0-wordsMutation.h  1-dicionario.h  2-pals.h  3-fileStats.h
 	$(CC) $(CFLAGS1) -c 0-wordsMutation.c
 
-1-dicionario.o: 1-dicionario.c headers/1-dicionario.h
+1-dicionario.o: 1-dicionario.c  1-dicionario.h
 	$(CC) $(CFLAGS1) -c 1-dicionario.c
 
-2-pals.o: 2-pals.c headers/2-pals.h
+2-pals.o: 2-pals.c  2-pals.h
 	$(CC) $(CFLAGS1) -c 2-pals.c
 
-3-fileStats.o: 3-fileStats.c headers/3-fileStats.h
+3-fileStats.o: 3-fileStats.c  3-fileStats.h
 	$(CC) $(CFLAGS1) -c 3-fileStats.c
 
 
