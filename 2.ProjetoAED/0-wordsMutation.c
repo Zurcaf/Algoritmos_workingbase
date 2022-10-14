@@ -1,7 +1,5 @@
 #include "0-wordsMutation.h"
 
-//mudar para wrdmttns no make file
-
 int main(int argc, char* argv[])
 {
 char *dictLocation=NULL, *palsLocation=NULL, *statsLocation=NULL;

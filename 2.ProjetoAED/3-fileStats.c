@@ -40,31 +40,29 @@ void getStats(char **locationStats, int *lenCount, char ***tabs, char *locationP
     // scan dos problemas e escrita da resposta em . pals.stats
     while (fscanf(palsPointer, "%s %s %d", word1, word2, &mode) == 3)
     {
-        if(strlen(word1)!=strlen(word2) || strlen(word1) > (lenMax-1) || strlen(word2) > (lenMax-1))
-            mode=3;
-        else
-        {
+        if(strlen(word1)!=strlen(word2) || strlen(word1) > (lenMax) || strlen(word2) > (lenMax))
+            {
+                fprintf(statsPointer, "%s %s %d \n \n", word1, word2, mode);
+                continue;
+            }
+
+
         bsResult1 = binarySearch(tabs[strlen(word1)], word1, lenCount[strlen(word1)]);
         bsResult2 = binarySearch(tabs[strlen(word2)], word2, lenCount[strlen(word2)]);
-        }
+
+        if (bsResult1 == -1 || bsResult2 == -1)
+        {
+            fprintf(statsPointer, "%s %s %d \n \n", word1, word2, mode);
+            continue;
+        }   
 
         switch (mode)
         {
         case 1:
-        {
-            if (bsResult1 == -1 || bsResult2 == -1)
-                fprintf(statsPointer, "%s %s %d \n \n", word1, word2, mode);
-            else
                 fprintf(statsPointer, "%s %d\n\n", word1, lenCount[strlen(word1)]);
-        }
         break;
         case 2:
-        {
-            if (bsResult1 == -1 || bsResult2 == -1)
-                fprintf(statsPointer, "%s %s %d \n \n", word1, word2, mode);
-            else
-                fprintf(statsPointer, "%s %d \n%s %d \n \n", word1, bsResult1, word2, bsResult2);
-        }
+            fprintf(statsPointer, "%s %d \n%s %d \n\n", word1, bsResult1, word2, bsResult2);
         break;
         default:
             fprintf(statsPointer, "%s %s %d\n\n", word1, word2, mode);
