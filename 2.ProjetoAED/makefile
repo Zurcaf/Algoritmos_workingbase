@@ -23,6 +23,6 @@ gdb: 0-wordsMutation.o 0-general.o 1-dicionario.o 2-pals.o 3-fileStats.o
 
 3-fileStats.o: 3-fileStats.c  3-fileStats.h
 	$(CC) $(CFLAGS1) -c 3-fileStats.c
-clear:
+clean:
 	rm -f *.o wrdmttns wr-gdb
-	
+	rm -f *.o wrdmttns wrdmttns
