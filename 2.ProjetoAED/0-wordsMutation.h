@@ -22,5 +22,6 @@ void argsCheck(int argc);
 void dictAndPalsCheck(char* argv[]);
 void dictAndPalsAloc(char *argv[], char **dictLocation, char **palsLocation);
 void fillReqPals(char *palsLocation, bool **palsActivation, int *maxLen);
+void memoryFree(int *lenCount, char ***tabs, int maxLen, bool *reqPals, char *statsLocation, char *dictLocation, char *palsLocation);
 
 #endif
