@@ -35,8 +35,11 @@ int  FillInWordArray(WordTab t, char *file);
 void WriteFile(WordTab t, char *file, int numWords);
 void FreeWordArray(WordTab *t, int numWords);
 
-int  LessAlphabetic(Item a, Item b);
-int  LessNumUses(Item a, Item b);
-int  LessLength(Item a, Item b);
+int LessAlphabetic(Item a, Item b);
+int GreaterAlphabetic(Item a, Item b);
+int LessOccurrences(Item a, Item b);
+int GreaterOccurrences(Item a, Item b);
+int LessLength(Item a, Item b);
+int GreaterLength(Item a, Item b);
 
 #endif

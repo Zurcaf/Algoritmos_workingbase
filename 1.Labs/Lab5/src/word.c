@@ -252,6 +252,12 @@ void WriteFile(WordTab wtab, char *ficheiro, int numWords)
 void FreeWordArray(WordTab *wtab, int numWords)
 {
    /** -- free all memory allocated for table of words -- */
+   int i;
+   
+   for (i = 0; i < numWords; i++) {
+      free((*wtab)[i]->word);
+      free((*wtab)[i]);
+   }
 
    /*==== TODO ====*/
 
@@ -277,10 +283,48 @@ int LessAlphabetic(Item a, Item b)
       return 0;
 }
 
-
 /*************************************************************************
  **  -- Add comparison functions for the remaining criteria --
 *************************************************************************/
+int GreaterAlphabetic(Item a, Item b)
+{
+   if (strcasecmp(((WordS *) a)->word, ((WordS *) b)->word) > 0)
+      return 1;
+   else
+      return 0;
+}
+
+int LessOccurrences(Item a, Item b)
+{
+   if (((WordS *) a)->numUses < ((WordS *) b)->numUses)
+      return 1;
+   else
+      return 0;
+}
+
+int GreaterOccurrences(Item a, Item b)
+{
+   if (((WordS *) a)->numUses > ((WordS *) b)->numUses)
+      return 1;
+   else
+      return 0;
+}
+
+int LessLength(Item a, Item b)
+{
+   if (strlen(((WordS *) a)->word) < strlen(((WordS *) b)->word))
+      return 1;
+   else
+      return 0;
+}
+
+int GreaterLength(Item a, Item b)
+{
+   if (strlen(((WordS *) a)->word) > strlen(((WordS *) b)->word))
+      return 1;
+   else
+      return 0;
+}
 
     /*==== TODO ====*/
 
