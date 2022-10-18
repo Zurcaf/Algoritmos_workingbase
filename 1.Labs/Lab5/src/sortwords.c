@@ -58,7 +58,7 @@ void sort(Item arr[], int l, int r, int (*less) (Item, Item))
          tmp = arr[i];
          arr[i] = arr[i + 1];
          arr[i + 1] = tmp;
-
+         OP_CNT += 4;
          swapped = 1;
       }
       OP_CNT+=2;

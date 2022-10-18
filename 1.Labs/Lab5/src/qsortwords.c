@@ -23,50 +23,52 @@ enum sort_order {ascending, descending};
 
 enum sort_criteria {alphabetic, length, occurrences};
 
+int OP_CNT = 0; /* global variable, to simplify complexity assessment */
 
-int OP_CNT = 0;     /* global variable, to simplify complexity assessment */
-
-
-/******************************************************************************
- * sort ()
- *
- * Arguments: a - table of items to sort
- *            l, r - limits on table to consider
- *            less - item comparison function
- * Returns: (void)
- * Side-Effects: table is sorted in place
- *
- * Description: implements "some" sorting algorithm for abstract type (Item),
- *       using also an abstract type comparison function (*less)
- *           a[] - array of abstract type Item to be sorted
- *           l - index of first element in the array to be sorted
- *           r - last element of the array to be sorted
- *           (*less)(Item,Item) - abstract type comparison function
- *****************************************************************************/
-/*bubble sort para ordenar arr*/
-void sort(Item arr[], int l, int r, int (*less) (Item, Item))
+void swap(Item *a, Item *b)
 {
-  int swapped = 1;
-  int i, j = 0;
-  Item tmp;
+   Item tmp = *a;
+   *a = *b;
+   *b = tmp;
+   OP_CNT += 4;
+}
 
+int partition(Item *a, int l, int r, int (*less)(Item, Item))
+{
+   int i = l - 1, j = r;
+   Item v = a[r];
+   OP_CNT++;
+   for (;;)
+   {
+      while (less(a[++i], v))
+      {
+         OP_CNT++;
+      };
+      while (less(v, a[--j]))
+      {
+         OP_CNT++;
+         if (j == l)
+            break;
+      };
+      if (i >= j)
 
-  while (swapped) {
-    swapped = 0;
-    for (i = r-1; i >= (l + j); i--) {
-      if (less(arr[i+1], arr[i])) {
-         tmp = arr[i];
-         arr[i] = arr[i + 1];
-         arr[i + 1] = tmp;
+         break;
+      swap(&a[i], &a[j]);
 
-         swapped = 1;
-      }
-      OP_CNT+=2;
-    }
-    j++;
-  }
+   }
+   swap(&a[i], &a[r]);
+   return i;
+}
 
-  return;
+/*qsort para ordenar arr*/
+void quickSort(Item arr[], int l, int r, int (*less) (Item, Item))
+{
+   int i;
+   if (r <= l)
+      return;
+   i = partition(arr, l, r, less);
+   quickSort(arr, l, i-1, less);
+   quickSort(arr, i+1, r, less);
 }
 
 
@@ -115,27 +117,27 @@ int main(int argc, char **argv)
        appropriate comparison function selected by user option */
 
    if ((criterio == alphabetic) && (sentido == ascending)) {
-      sort(wordtab, 0, numWords-1, LessAlphabetic);
+      quickSort(wordtab, 0, numWords-1, LessAlphabetic);
    }
 
    if((criterio == alphabetic) && (sentido == descending)) {
-      sort(wordtab, 0, numWords-1, GreaterAlphabetic);
+      quickSort(wordtab, 0, numWords-1, GreaterAlphabetic);
    }
 
    if((criterio == length) && (sentido == ascending)) {
-      sort(wordtab, 0, numWords-1, LessLength);
+      quickSort(wordtab, 0, numWords-1, LessLength);
    }
 
    if((criterio == length) && (sentido == descending)) {
-      sort(wordtab, 0, numWords-1, GreaterLength);
+      quickSort(wordtab, 0, numWords-1, GreaterLength);
    }
 
    if((criterio == occurrences) && (sentido == ascending)) {
-      sort(wordtab, 0, numWords-1, LessOccurrences);
+      quickSort(wordtab, 0, numWords-1, LessOccurrences);
    }
 
    if((criterio == occurrences) && (sentido == descending)) {
-      sort(wordtab, 0, numWords-1, GreaterOccurrences);
+      quickSort(wordtab, 0, numWords-1, GreaterOccurrences);
    }
    /* other user options */
    /*==== TODO ====*/
