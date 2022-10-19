@@ -228,7 +228,7 @@ void WriteFile(WordTab wtab, char *ficheiro, int numWords)
 
     f = OpenFile(word, "w");
     for (i = 0; i < numWords; i++) {
-        fprintf(f, "%d: %s\n", wtab[i]->numUses, wtab[i]->word);
+        fprintf(f, "%s\n", wtab[i]->word);
     }
 
     fclose(f);
@@ -258,6 +258,8 @@ void FreeWordArray(WordTab *wtab, int numWords)
       free((*wtab)[i]->word);
       free((*wtab)[i]);
    }
+
+   free(*wtab);
 
    /*==== TODO ====*/
 

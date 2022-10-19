@@ -54,8 +54,9 @@ int partition(Item *a, int l, int r, int (*less)(Item, Item))
 
          break;
       swap(&a[i], &a[j]);
-
+      OP_CNT+=2;
    }
+   OP_CNT+=2;
    swap(&a[i], &a[r]);
    return i;
 }
