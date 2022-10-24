@@ -114,18 +114,23 @@ void doBFS(LinkedList **listv, int sn, int nv)
   for (; numInqueue < nv;)
   {
     /* get first element in queue, tells us node being visited */
-    Ns = /* -----------  COMPLETE --------------- */
+    Ns = getfirstQueue(BFSqueue);   /* -----------  COMPLETE --------------- */
         if (Ns == ((NodeS *)NULL)) break;
     /* process that node's adjacency list */
-    lp = /* -----------  COMPLETE --------------- */
+    lp = listv[Ns->node];   /* -----------  COMPLETE --------------- */
         while (lp != NULL)
     {
       /* for every element in the adjacency list */
       /* check if it has been queued; if not, put it in the queue */
       /* and print it to stdout */
-
-      /* -----------  COMPLETE --------------- */
-
+      pint = (twint *)getItemLinkedList(lp);   /* -----------  COMPLETE --------------- */
+      if (inqueue[pint->n2] == 0)
+      {
+        insertQueue(BFSqueue, (Item)&fakeNodes[pint->n2]);
+        inqueue[pint->n2] = 1;
+        fprintf(stdout, "%d ", pint->n2);
+        numInqueue++;
+      }
       lp = getNextNodeLinkedList(lp);
     }
   }
@@ -239,8 +244,8 @@ int main(int argc, char *argv[])
     }
 
     /*********** INSERT EDGE STRUCTURES IN EACH APPROPRIATE LIST ***********/
-    listv[n1] = /* -----------  COMPLETE --------------- */
-    listv[n2] = /* -----------  COMPLETE --------------- */
+    listv[n1] = insertUnsortedLinkedList(listv[n1], (Item)pint1);
+    listv[n2] = insertUnsortedLinkedList(listv[n2], (Item)pint2);
   }
 
   /* Compute de degree of every nome and the average edge density */
@@ -266,6 +271,7 @@ int main(int argc, char *argv[])
       lp = getNextNodeLinkedList(lp);
       /* print the node and the respective weight */
       /* -----------  COMPLETE --------------- */
+      fprintf(fpOut, " %d:%d", pint1->n2, pint1->wt);
     }
     fprintf(fpOut, " -1\n");
   }
@@ -290,6 +296,17 @@ int main(int argc, char *argv[])
   doBFS(listv, sn, nv);
 
   /* -- free any memory you have allocated -- */
+  for (i = 0; i < nv; i++)
+  {
+    lp = listv[i];
+    while (lp != NULL)
+    {
+      pint1 = (twint *)getItemLinkedList(lp);
+      lp = getNextNodeLinkedList(lp);
+      free(pint1);
+    }
+  }
+  free(listv);
 
   exit(0);
 }
