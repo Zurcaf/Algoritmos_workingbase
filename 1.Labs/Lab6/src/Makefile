@@ -4,7 +4,7 @@
 #-----------------------------------------------------------------------
 #   Compiler, Compiler Flags
 CC = gcc
-CFLAGS = -g -Wall -ansi -pedantic
+CFLAGS = -g -Wall -ansi -pedantic -std=c99
 
 #   Sources
 SOURCES = ev2el.c LinkedList.c queue.c

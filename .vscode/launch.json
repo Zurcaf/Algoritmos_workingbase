@@ -4,11 +4,9 @@
       "name": "(gdb) Launch",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/1.Labs/Lab5/src/sortwords",
+      "program": "${workspaceFolder}/1.Labs/Lab6/src/ev2el",
       "args": [
-        "${workspaceFolder}/1.Labs/Lab5/src/test/doc0.txt",
-        "-ocorrencias",
-        "-d"
+        "${workspaceFolder}/1.Labs/Lab6/tests/grafo5.edge",
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",

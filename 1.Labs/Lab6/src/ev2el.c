@@ -30,8 +30,20 @@ typedef struct _twint
 typedef struct _nodeS
 {
   int node;
+  
   /* could add additional information here */
 } NodeS;
+
+void freeEntryItem(Item item)
+{
+  free(item);
+    return;       /* no mem actually allocated */
+}
+
+void freeEntryItemQueue(Item item)
+{
+    return;       /* no mem actually allocated */
+}
 
 /******************************************************************************
  * usage ()
@@ -114,16 +126,17 @@ void doBFS(LinkedList **listv, int sn, int nv)
   for (; numInqueue < nv;)
   {
     /* get first element in queue, tells us node being visited */
-    Ns = getfirstQueue(BFSqueue);   /* -----------  COMPLETE --------------- */
-        if (Ns == ((NodeS *)NULL)) break;
+    Ns = getfirstQueue(BFSqueue); /* -----------  COMPLETE --------------- */
+    if (Ns == ((NodeS *)NULL))
+      break;
     /* process that node's adjacency list */
-    lp = listv[Ns->node];   /* -----------  COMPLETE --------------- */
-        while (lp != NULL)
+    lp = listv[Ns->node]; /* -----------  COMPLETE --------------- */
+    while (lp != NULL)
     {
       /* for every element in the adjacency list */
       /* check if it has been queued; if not, put it in the queue */
       /* and print it to stdout */
-      pint = (twint *)getItemLinkedList(lp);   /* -----------  COMPLETE --------------- */
+      pint = (twint *)getItemLinkedList(lp); /* -----------  COMPLETE --------------- */
       if (inqueue[pint->n2] == 0)
       {
         insertQueue(BFSqueue, (Item)&fakeNodes[pint->n2]);
@@ -135,6 +148,10 @@ void doBFS(LinkedList **listv, int sn, int nv)
     }
   }
   fprintf(stdout, "\n");
+
+  free(inqueue);
+  free(fakeNodes);
+  freeQueue(BFSqueue, freeEntryItemQueue);
 
   return;
 }
@@ -199,12 +216,12 @@ int main(int argc, char *argv[])
   if (k < 1)
   {
     printf("ERROR cannot read E number from input file %s\n",
-        nomeFicheiroIn);
+           nomeFicheiroIn);
     exit(2);
   }
 
   /* create vector for adjacency lists, one per node */
-  listv = (LinkedList **)malloc(nv * sizeof(LinkedList *));
+  listv = (LinkedList **)calloc(nv, sizeof(LinkedList *));
   if (listv == ((LinkedList **)NULL))
     memoryError("memory allocation for adjacency lists vector in main");
 
@@ -246,10 +263,23 @@ int main(int argc, char *argv[])
     /*********** INSERT EDGE STRUCTURES IN EACH APPROPRIATE LIST ***********/
     listv[n1] = insertUnsortedLinkedList(listv[n1], (Item)pint1);
     listv[n2] = insertUnsortedLinkedList(listv[n2], (Item)pint2);
+
   }
 
   /* Compute de degree of every nome and the average edge density */
-
+  int degree = 0;
+  for (i = 0; i < nv; i++)
+  {
+    degree = 0;
+    lp = listv[i];
+    while (lp != NULL)
+    {
+      degree++;
+      lp = getNextNodeLinkedList(lp);
+    }
+    fprintf(stdout, "Degree of node %d is %d\n", i, degree);
+  }
+  fprintf(stdout, "Average edge density is %f\n", ((float)(ne*2) / (float)nv));
   /* -----------  COMPLETE --------------- */
 
   /* open output file */
@@ -296,17 +326,13 @@ int main(int argc, char *argv[])
   doBFS(listv, sn, nv);
 
   /* -- free any memory you have allocated -- */
-  for (i = 0; i < nv; i++)
+  for(i = 0; i < nv; i++)
   {
-    lp = listv[i];
-    while (lp != NULL)
-    {
-      pint1 = (twint *)getItemLinkedList(lp);
-      lp = getNextNodeLinkedList(lp);
-      free(pint1);
-    }
+    freeLinkedList(listv[i], freeEntryItem);
   }
   free(listv);
+  free(nomeFicheiroOut);
+  
 
   exit(0);
 }
