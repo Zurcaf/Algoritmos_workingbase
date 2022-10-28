@@ -332,7 +332,6 @@ int main(int argc, char *argv[])
   }
   free(listv);
   free(nomeFicheiroOut);
-  
 
   exit(0);
 }
