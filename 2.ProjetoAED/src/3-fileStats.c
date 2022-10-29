@@ -1,4 +1,4 @@
-#include "0-wordsMutation.h"
+#include "0Main.h"
 
 // void getStats(char *locationStat, int *lenCount)
 void getStats(char **locationStats, int *lenCount, char ***tabs, char *locationPals, int lenMax)

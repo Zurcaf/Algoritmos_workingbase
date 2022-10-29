@@ -1,10 +1,10 @@
-#include "0-wordsMutation.h"
+#include "0Main.h"
 
 int main(int argc, char* argv[])
 {
 char *dictLocation=NULL, *palsLocation=NULL, *statsLocation=NULL;
 bool *reqPals=NULL;
-int *lenCount=NULL, i=0, j=0, maxLen=0;
+int *lenCount=NULL, maxLen=0;
 char*** tabs=NULL;
 
 //verificações dos argumentos (quantidade e extensões)

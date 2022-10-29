@@ -1,4 +1,4 @@
-#include "0-wordsMutation.h"
+#include "0Main.h"
 
 void savePals(char* palsLocation, bool* palsActivation)
 {

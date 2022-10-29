@@ -1,4 +1,6 @@
-#include "0-wordsMutation.h"
+#include "0Main.h"
+
+
 
 void argsCheck(int argc)
 {
