@@ -27,6 +27,33 @@
       ]
     },
     {
+      "name": "gdb Projeto",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/2.ProjetoAED/bin/wr",
+      "args": [
+        "${workspaceFolder}/2.ProjetoAED/tests/a.dict",
+        "${workspaceFolder}/2.ProjetoAED/tests/a.pals",
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Set Disassembly Flavor to Intel",
+          "text": "-gdb-set disassembly-flavor intel",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    {
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",

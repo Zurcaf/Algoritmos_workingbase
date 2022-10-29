@@ -1,16 +1,12 @@
 #include "0Main.h"
 
-void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, bool* palsActivation)
+void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, graph **gs)
 {
     FILE *dictPointer=NULL;
 
     // abrir o ficheiro e verificar se foi aberto com sucesso
     dictPointer = (FILE *)fopen(locationDict, "r");
-    if (dictPointer == (FILE *)NULL)
-    {
-        fprintf(stderr, "File %s cannot be read.  Please correct.\n", locationDict);
-        exit(0);
-    }
+    fileCheck(dictPointer, locationDict);
 
     char word[WORD_LEN_MAX]; // buffer para a palavra
     int i=0, j=0; // variaveis auxiliares
@@ -18,24 +14,16 @@ void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, boo
 
     //criar array de inteiros para guardar as ocorrencias de cada tamanho de palavra
     (*lenCount) = (int*)calloc(maxLen, sizeof(int));
-    if ((*lenCount) == NULL)
-    {
-        fprintf(stderr, "ERROR: not enough memory available!\n");
-        exit(4);
-    }
+    memoryCheck(*lenCount);
     
     //Alocar tabs *** para cada tananho inicializado
     (*tabs) = (char***)calloc(maxLen, sizeof(char**));
-    if ((*tabs) == NULL)
-    {
-        fprintf(stderr, "ERROR: not enough memory available!\n");
-        exit(4);
-    }
+    memoryCheck(*tabs);
 
     //preencher lenCount com o numero de ocorrencias de cada tamanho de palavra
     while (fscanf(dictPointer, "%s", word) == 1)
     {
-        if(strlen(word)< maxLen && palsActivation[strlen(word)] == true)
+        if(strlen(word)< maxLen && gs[strlen(word)] != NULL)
         {
             (*lenCount)[strlen(word)]++;
         }
@@ -56,20 +44,13 @@ void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, boo
         {
             //alocar memoria para o array de palavras com o tamanho i
             (*tabs)[i] = (char**)calloc((*lenCount)[i], sizeof(char*));
-            if ((*tabs)[i] == NULL)
-            {
-                fprintf(stderr, "ERROR: not enough memory available!\n");
-                exit(4);
-            }
+            memoryCheck((*tabs)[i]);
+
             for(j=0; j<(*lenCount)[i]; j++)
             {
                 //alocar memoria para cada palavra com o tamanho i
                 (*tabs)[i][j] = (char*)calloc(i+1, sizeof(char));
-                if ((*tabs)[i][j] == NULL)
-                {
-                    fprintf(stderr, "ERROR: not enough memory available!\n");
-                    exit(4);
-                }
+                memoryCheck((*tabs)[i][j]);
             }
         }
     }
@@ -77,16 +58,11 @@ void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, boo
     int* lenCountAux = NULL;
 
     lenCountAux = (int*)calloc(maxLen, sizeof(int));
-    if ((*lenCount) == NULL)
-    {
-        fprintf(stderr, "ERROR: not enough memory available!\n");
-        exit(4);
-    }
-
+    memoryCheck(lenCountAux);
 
     while (fscanf(dictPointer, "%s", word) == 1)
     {    
-        if(strlen(word)< maxLen && palsActivation[strlen(word)] == true)
+        if(strlen(word)< maxLen && gs[strlen(word)] != NULL)
         {
             strcpy((*tabs)[strlen(word)][lenCountAux[strlen(word)]], word);
             lenCountAux[strlen(word)]++;
@@ -99,12 +75,12 @@ void saveDict(char *locationDict, int** lenCount, char ****tabs, int maxLen, boo
     free(lenCountAux);
 }
 
-void sortDict(int *lenCount, char ***tabs, int maxLen, bool *palsActivation)
+void sortDict(int *lenCount, char ***tabs, int maxLen, graph **gs)
 {
     int i;
     for(i = 0; i < maxLen; i++)
     {
-        if (lenCount[i] > 0 && palsActivation[i] == true)
+        if (lenCount[i] > 0 && gs[i] != NULL)
         {
             qsort(tabs[i], lenCount[i], sizeof(char*), compare);
         }
@@ -133,10 +109,7 @@ int compare(const void *a, const void *b)
     return strcmp(*str_a, *str_b); // r=0 se forem iguais. r<0 -> 'a' deve estar antes do 'b'. r>0 -> 'a' deve estar depois de 'b'.
 } 
 
-// void openFile()
-// {
 
-// }
 // void fillLenCount()
 // {
 

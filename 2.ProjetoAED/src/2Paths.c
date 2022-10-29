@@ -1,7 +1,6 @@
 #include "0Main.h"
 
-// void getStats(char *locationStat, int *lenCount)
-void getStats(char **locationStats, int *lenCount, char ***tabs, char *locationPals, int lenMax)
+void makePaths(char *locationStats, int *lenCount, char ***tabs, char *locationPals, int lenMax)
 {
     FILE *palsPointer = NULL, *statsPointer=NULL;
     char word1[WORD_LEN_MAX], word2[WORD_LEN_MAX]; // buffer para a palavra
@@ -12,30 +11,13 @@ void getStats(char **locationStats, int *lenCount, char ***tabs, char *locationP
         word1[i] = '\0';
         word2[i] = '\0';
     }
+
     // abrir o ficheiro e verificar se foi aberto com sucesso
     palsPointer = (FILE *)fopen(locationPals, "r");
-    if (palsPointer == (FILE *)NULL)
-    {
-        fprintf(stderr, "File %s cannot be read.  Please correct.\n", locationPals);
-        exit(0);
-    }
+    fileCheck(palsPointer, locationPals);
 
-    (*locationStats) = (char*)calloc(((strlen(locationPals)-(strlen(PALS_EXT))) + (strlen(STATS_EXT)) + 1), sizeof(char));
-    if ((*locationStats) == NULL)
-    {
-        fprintf(stderr, "ERROR: not enough memory available!\n");
-        exit(4);
-    }
-    cutPals(&locationPals);
-    strcpy((*locationStats), locationPals);
-    strcat((*locationStats), STATS_EXT);
-
-    statsPointer = (FILE *)fopen((*locationStats), "w");
-    if (statsPointer == (FILE *)NULL)
-    {
-        fprintf(stderr, "File %s cannot be created.  Please correct.\n", (*locationStats));
-        exit(0);
-    }
+    statsPointer = (FILE *)fopen(locationStats, "w");
+    fileCheck(statsPointer, locationStats);
 
     // scan dos problemas e escrita da resposta em . pals.stats
     while (fscanf(palsPointer, "%s %s %d", word1, word2, &mode) == 3)
@@ -94,7 +76,4 @@ int binarySearch(char **tabs, char *nome, int n)
     }
     return -1;
 }
-void cutPals(char **locationPals)
-{
-    (*locationPals)[(strlen(*locationPals) - strlen(PALS_EXT))] = '\0';
-}
+

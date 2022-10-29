@@ -3,6 +3,7 @@ CFLAGS= -Wall -std=c99 -g
 
 OBJ = obj
 SRC = src
+HEAD = include
 SRCS = $(wildcard $(SRC)/*.c)
 OBJS = $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
 SUBMITNAME = ProjetoAED
@@ -12,6 +13,7 @@ BIN = $(BINDIR)/wr
 SUBMITNAME = wrdmttns
 
 all: $(BIN)
+
 
 $(BIN): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@
