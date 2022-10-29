@@ -4,6 +4,30 @@
 void memoryFree(graph **gs, int *lenCount, char ***tabs, int maxLen,  char *statsLocation, char *dictLocation, char *palsLocation)
 {
     int i=0, j=0;
+    Edge *aux=NULL, *aux2=NULL;
+
+    for(i=0; i<maxLen; i++)
+    {
+        if (gs[i] != NULL)
+        {
+            for (j=0; j<lenCount[i]; j++)
+            {
+                if(gs[i]->adj[j] != NULL)
+                {
+                    aux = gs[i]->adj[j];
+                    while(aux != NULL)
+                    {
+                        aux2 = aux;
+                        aux = aux->next;
+                        free(aux2);
+                    }
+                }
+            }
+            free(gs[i]->adj);
+            free(gs[i]);
+        }
+    }
+    free(gs);
     
     for (i = 0; i < maxLen; i++)
     {
@@ -22,15 +46,6 @@ void memoryFree(graph **gs, int *lenCount, char ***tabs, int maxLen,  char *stat
     free(statsLocation);
     free(dictLocation);
     free(palsLocation);
-
-    for(i=0; i<maxLen; i++)
-    {
-        if(gs[i] != NULL)
-        {
-            free(gs[i]);
-        }
-    }
-    free(gs);
 }
 
 
@@ -62,6 +77,11 @@ void fillGraphs(char *palsLocation,  int *maxLen, graph ***gs)
     *gs = (graph **)calloc((*maxLen), sizeof(graph *));
     memoryCheck(*gs);
 
+    for(int i=0; i<(*maxLen); i++)
+    {
+        (*gs)[i] = NULL;
+    }
+
     rewind(fp);
 
     while (fscanf(fp, "%s %s %d", word1, word2, &mode) == 3)
@@ -75,6 +95,7 @@ void fillGraphs(char *palsLocation,  int *maxLen, graph ***gs)
             (*gs)[strlen(word1)]->maxMode = mode;
         }
     }
+    
  
     
     fclose(fp);

@@ -19,6 +19,7 @@ fillGraphs(palsLocation, &maxLen, &graphs);
 saveDict(dictLocation, &lenCount, &tabs, maxLen, graphs);
 sortDict(lenCount, tabs, maxLen, graphs);
 
+graphsAdjs(graphs, tabs, lenCount, maxLen);
 
 alocPaths(&pathsLocation, palsLocation);   
 makePaths(pathsLocation, lenCount, tabs, palsLocation, maxLen);

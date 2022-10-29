@@ -17,14 +17,23 @@
 #define LINE_MAX 1000
 
 
+typedef struct edge
+{
+    int n2;
+    int wt;
+    struct edge *next;
+} Edge;
 typedef struct graph
 {
     int vertices, maxMode;
-    int **adj; 
+    Edge **adj; 
 }graph;
 
 #include "1Dicionario.h"
 #include "2Paths.h"
+
+//libertação de toda a memoria alocada
+void memoryFree(graph **gs, int *lenCount, char ***tabs, int maxLen, char *statsLocation, char *dictLocation, char *palsLocation);
 
 //verificações dos argumentos (quantidade e extensões)
 void argsCheck(int argc);
@@ -47,14 +56,13 @@ void fillGraphs(char *palsLocation, int *maxLen, graph ***gs);
 //inicialização de um grafo (alocar e inicializar a 0)
 void initGraph(graph **g);
 
-//libertação de toda a memoria alocada
-void memoryFree(graph **gs, int *lenCount, char ***tabs, int maxLen, char *statsLocation, char *dictLocation, char *palsLocation);
 
 //retirar pals do nome do ficheiro
 void cutPals(char **locationPals);
 
 //alocar memoria para o ficheiro de paths
 void alocPaths(char **locationStats, char *locationPals);
+
 
 
 #endif
