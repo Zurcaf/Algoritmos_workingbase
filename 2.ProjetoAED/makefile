@@ -33,3 +33,6 @@ $(OBJ):
 
 clean:
 	rm -r $(BINDIR)/* $(OBJ)/*
+
+submit:
+	zip -r $(SUBMITNAME) $(SRC) $(MAKEFILE) $(README)
