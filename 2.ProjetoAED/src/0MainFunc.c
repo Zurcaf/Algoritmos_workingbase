@@ -1,9 +1,19 @@
 #include "0Main.h"
 
-void freeOtherMemory(int * palsOrder, int *dictLenCount,char *statsLocation, char *dictLocation, char *palsLocation)
+void freeOtherMemory(int maxLen, graph **gs, int * palsOrder, int *dictLenCount,char *statsLocation, char *dictLocation, char *palsLocation)
 {
     free(dictLenCount);
     free(palsOrder);
+
+    for(int i=0; i< maxLen; i++)
+    {
+        if(gs[i] != NULL)
+        {
+            free(gs[i]);
+        }
+    }
+    free(gs);
+
 
     free(statsLocation);
     free(dictLocation);
@@ -45,35 +55,6 @@ void freeDict(char ***tabs, int *lenCount, int maxLen)
         }
     }
     free(tabs);
-}
-
-void freeGraph (graph **gs, int maxLen, int *lenCount)
-{
-    int i = 0 , j = 0;
-    Edge *aux = NULL, *aux2 = NULL;
-
-    for (i = 0; i < maxLen; i++)
-    {
-        if (gs[i] != NULL)
-        {
-            // for (j = 0; j < lenCount[i]; j++)
-            // {
-            //     if (gs[i]->adj[j] != NULL)
-            //     {
-            //         aux = gs[i]->adj[j];
-            //         while (aux != NULL)
-            //         {
-            //             aux2 = aux;
-            //             aux = aux->next;
-            //             free(aux2);
-            //         }
-            //     }
-            // }
-            // free(gs[i]->adj);
-            free(gs[i]);
-        }
-    }
-    free(gs);
 }
 
 
