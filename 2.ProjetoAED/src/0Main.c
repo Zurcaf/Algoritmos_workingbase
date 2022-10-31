@@ -2,30 +2,29 @@
 
 int main(int argc, char* argv[])
 {
-char *dictLocation=NULL, *palsLocation=NULL, *statsLocation=NULL;
-bool *reqPals=NULL;
-int *lenCount=NULL, maxLen=0;
+char *dictLocation=NULL, *palsLocation=NULL, *pathsLocation=NULL;
+int *lenCount=NULL, maxLen=0; 
 char*** tabs=NULL;
+graph **graphs=NULL;
 
-//verificações dos argumentos (quantidade e extensões)
+
 argsCheck(argc);
 dictAndPalsCheck(argv);
 
-//alocação de memoria para cada um dos nomes do ficheiro
 dictAndPalsAloc(argv, &dictLocation, &palsLocation);
 
-//abertura do ficheiro pals verificar que comprimentos de palavras retirar do dicionario
-fillReqPals(palsLocation, &reqPals, &maxLen);
+fillGraphs(palsLocation, &maxLen, &graphs);
 
 //tratamento do dicionario (guardar e organizar)
-saveDict(dictLocation, &lenCount, &tabs, maxLen, reqPals);
-sortDict(lenCount, tabs, maxLen, reqPals);
+saveDict(dictLocation, &lenCount, &tabs, maxLen, graphs);
+sortDict(lenCount, tabs, maxLen, graphs);
 
-//leitura do pals e fazer stats
-getStats(&statsLocation, lenCount, tabs, palsLocation, maxLen);
+graphsAdjs(graphs, tabs, lenCount, maxLen);
 
-//libertação de toda a memoria alocada
-memoryFree(lenCount, tabs, maxLen, reqPals, dictLocation, palsLocation, statsLocation);
+alocPaths(&pathsLocation, palsLocation);   
+makePaths(pathsLocation, lenCount, tabs, palsLocation, maxLen);
+
+memoryFree(graphs, lenCount, tabs, maxLen, dictLocation, palsLocation, pathsLocation);
 
 return 0;
 }

@@ -27,20 +27,55 @@
       ]
     },
     {
-      "name": "C/C++ Runner: Debug Session",
+      "name": "gdb Projeto teste",
       "type": "cppdbg",
       "request": "launch",
-      "args": [],
+      "program": "${workspaceFolder}/2.ProjetoAED/bin/wr",
+      "args": [
+        "${workspaceFolder}/2.ProjetoAED/tests/a.dict",
+        "${workspaceFolder}/2.ProjetoAED/tests/a.pals",
+      ],
       "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
       "externalConsole": false,
-      "cwd": "/mnt/c/Users/afons/OneDrive - Universidade de Lisboa/Desktop/Cross Drive/2ºAno/1ºSemestre1ºPeriodo/AlgoritmosEstruturaDeDados/Algoritmos_workingbase/1.Labs/Lab5",
-      "program": "/mnt/c/Users/afons/OneDrive - Universidade de Lisboa/Desktop/Cross Drive/2ºAno/1ºSemestre1ºPeriodo/AlgoritmosEstruturaDeDados/Algoritmos_workingbase/1.Labs/Lab5/build/Debug/outDebug",
       "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Set Disassembly Flavor to Intel",
+          "text": "-gdb-set disassembly-flavor intel",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    {
+      "name": "gdb Projeto big test",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/2.ProjetoAED/bin/wr",
+      "args": [
+        "${workspaceFolder}/2.ProjetoAED/ficheirosTeste/dicionarios/portugues.dict",
+        "${workspaceFolder}/2.ProjetoAED/ficheirosTeste/problemas/simple/Simple01.pals",
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "description": "Set Disassembly Flavor to Intel",
+          "text": "-gdb-set disassembly-flavor intel",
           "ignoreFailures": true
         }
       ]
