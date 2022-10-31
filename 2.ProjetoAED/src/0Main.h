@@ -29,16 +29,34 @@ typedef struct graph
     Edge **adj; 
 }graph;
 
-#include "1Dicionario.h"
-#include "2Paths.h"
+
+typedef struct problem_ Problem;
+struct problem_{
+    char* word1;
+    char* word2;
+    int mode;
+    int orderIndex;
+    Problem *next;
+};
+
+
+#include "1Pals.h"
+#include "2Dicionario.h"
+#include "3Paths.h"
 
 //libertação de toda a memoria alocada
-void memoryFree(graph **gs, int *lenCount, char ***tabs, int maxLen, char *statsLocation, char *dictLocation, char *palsLocation);
+void freeOtherMemory(int *palsOrder, int *dictLenCount, char *statsLocation, char *dictLocation, char *palsLocation);
+
+void freeDict(char ***tabs, int *lenCount, int maxLen);
+
+void freePals (Problem **palsTabs, int maxLen);
+
+void freeGraph (graph **gs, int maxLen, int *lenCount);
 
 //verificações dos argumentos (quantidade e extensões)
 void argsCheck(int argc);
 
-
+//verificação de memoria alocada
 void memoryCheck(void *ptr);
 
 
@@ -50,11 +68,6 @@ void dictAndPalsCheck(char* argv[]);
 //alocação de memoria para cada um dos nomes do ficheiro
 void dictAndPalsAloc(char *argv[], char **dictLocation, char **palsLocation);
 
-//abertura do ficheiro pals verificar que grafos teremos de inicializar e qual o modo maximo de cada um
-void fillGraphs(char *palsLocation, int *maxLen, graph ***gs);
-
-//inicialização de um grafo (alocar e inicializar a 0)
-void initGraph(graph **g);
 
 
 //retirar pals do nome do ficheiro

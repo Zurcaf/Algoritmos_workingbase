@@ -1,34 +1,38 @@
 #include "0Main.h"
 
-
-void memoryFree(graph **gs, int *lenCount, char ***tabs, int maxLen,  char *statsLocation, char *dictLocation, char *palsLocation)
+void freeOtherMemory(int * palsOrder, int *dictLenCount,char *statsLocation, char *dictLocation, char *palsLocation)
 {
-    int i=0, j=0;
-    Edge *aux=NULL, *aux2=NULL;
+    free(dictLenCount);
+    free(palsOrder);
 
-    for(i=0; i<maxLen; i++)
+    free(statsLocation);
+    free(dictLocation);
+    free(palsLocation);
+}
+
+void freePals (Problem **palsTabs, int maxLen)
+{
+    int i=0;
+    Problem *aux=NULL, *aux2=NULL;
+    for (i = 0; i < maxLen; i++)
     {
-        if (gs[i] != NULL)
+        aux = palsTabs[i];
+        while (aux != NULL)
         {
-            for (j=0; j<lenCount[i]; j++)
-            {
-                if(gs[i]->adj[j] != NULL)
-                {
-                    aux = gs[i]->adj[j];
-                    while(aux != NULL)
-                    {
-                        aux2 = aux;
-                        aux = aux->next;
-                        free(aux2);
-                    }
-                }
-            }
-            free(gs[i]->adj);
-            free(gs[i]);
+            aux2 = aux->next;
+            free(aux->word1);
+            free(aux->word2);
+            free(aux);
+            aux = aux2;
         }
     }
-    free(gs);
-    
+    free(palsTabs);
+}
+
+void freeDict(char ***tabs, int *lenCount, int maxLen)
+{
+    int i=0, j=0;
+        
     for (i = 0; i < maxLen; i++)
     {
         if (lenCount[i] > 0)
@@ -40,76 +44,39 @@ void memoryFree(graph **gs, int *lenCount, char ***tabs, int maxLen,  char *stat
             free(tabs[i]);
         }
     }
-    free(lenCount);
     free(tabs);
-
-    free(statsLocation);
-    free(dictLocation);
-    free(palsLocation);
 }
 
-
-void fillGraphs(char *palsLocation,  int *maxLen, graph ***gs)
+void freeGraph (graph **gs, int maxLen, int *lenCount)
 {
-    FILE *fp=NULL;
-    char word1[WORD_LEN_MAX] = {0}, word2[WORD_LEN_MAX] = {0};
-    int  mode=0;
+    int i = 0 , j = 0;
+    Edge *aux = NULL, *aux2 = NULL;
 
-    fp = fopen(palsLocation, "r");
-    fileCheck(fp, palsLocation);
-
-    while (fscanf(fp, "%s %s %d", word1, word2, &mode) == 3)
+    for (i = 0; i < maxLen; i++)
     {
-        if(strlen(word1) > (*maxLen))
+        if (gs[i] != NULL)
         {
-            (*maxLen) = strlen(word1);
-        }
-
-    }
-    if ((*maxLen) == 0)
-    {
-        fprintf(stderr, "ERROR: no words in file!(.pals)\n");
-        exit(6);
-    }
-
-    (*maxLen)++;
-
-    *gs = (graph **)calloc((*maxLen), sizeof(graph *));
-    memoryCheck(*gs);
-
-    for(int i=0; i<(*maxLen); i++)
-    {
-        (*gs)[i] = NULL;
-    }
-
-    rewind(fp);
-
-    while (fscanf(fp, "%s %s %d", word1, word2, &mode) == 3)
-    {
-        if((*gs)[strlen(word1)] == NULL)
-        {
-            initGraph(&(*gs)[strlen(word1)]);
-        }
-        if((*gs)[strlen(word1)]->maxMode < mode)
-        {
-            (*gs)[strlen(word1)]->maxMode = mode;
+            // for (j = 0; j < lenCount[i]; j++)
+            // {
+            //     if (gs[i]->adj[j] != NULL)
+            //     {
+            //         aux = gs[i]->adj[j];
+            //         while (aux != NULL)
+            //         {
+            //             aux2 = aux;
+            //             aux = aux->next;
+            //             free(aux2);
+            //         }
+            //     }
+            // }
+            // free(gs[i]->adj);
+            free(gs[i]);
         }
     }
-    
- 
-    
-    fclose(fp);
+    free(gs);
 }
 
-void initGraph(graph **g)
-{
-    (*g) = (graph *)malloc(sizeof(graph));
-    memoryCheck(*g);
 
-    (*g)->vertices = 0;
-    (*g)->maxMode = 0;
-    (*g)->adj = NULL;
-}
 
 void dictAndPalsAloc(char *argv[], char **dictLocation, char **palsLocation)
 {
@@ -129,7 +96,6 @@ void dictAndPalsAloc(char *argv[], char **dictLocation, char **palsLocation)
     }
     strcpy(*palsLocation, argv[2]);
 }
-
 
 void dictAndPalsCheck(char *argv[])
 {

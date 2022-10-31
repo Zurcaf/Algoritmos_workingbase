@@ -3,28 +3,46 @@
 int main(int argc, char* argv[])
 {
 char *dictLocation=NULL, *palsLocation=NULL, *pathsLocation=NULL;
-int *lenCount=NULL, maxLen=0; 
-char*** tabs=NULL;
-graph **graphs=NULL;
+int *dictLenCount=NULL, *palsOrder=NULL, maxLen=0, nPals=0; 
+char ***dicTabs=NULL;
+graph **graphsVector=NULL;
+Problem **palsTabs=NULL;
 
+// int i=0;
 
 argsCheck(argc);
 dictAndPalsCheck(argv);
 
 dictAndPalsAloc(argv, &dictLocation, &palsLocation);
 
-fillGraphs(palsLocation, &maxLen, &graphs);
+savePals(palsLocation, &nPals, &palsOrder, &palsTabs, &maxLen);
+fillGraphs(palsTabs, maxLen, &graphsVector);
 
 //tratamento do dicionario (guardar e organizar)
-saveDict(dictLocation, &lenCount, &tabs, maxLen, graphs);
-sortDict(lenCount, tabs, maxLen, graphs);
 
-graphsAdjs(graphs, tabs, lenCount, maxLen);
+saveDict(dictLocation, &dictLenCount, &dicTabs, maxLen, graphsVector);
+sortDict(dictLenCount, dicTabs, maxLen, graphsVector);
 
-alocPaths(&pathsLocation, palsLocation);   
-makePaths(pathsLocation, lenCount, tabs, palsLocation, maxLen);
+// alocPaths(&pathsLocation, palsLocation);
 
-memoryFree(graphs, lenCount, tabs, maxLen, dictLocation, palsLocation, pathsLocation);
+// for (i = 0; i < maxLen; i++)
+// {
+//     if (palsLenCount[i] > 0)
+//     {
+//         makeGraph(&graphsVector[i],dictLenCount[i], maxLen);
+//         dijkstra(graphsVector[i], dictLenCount[i], palsTabs[i], pathsLocation);
+//         freeGraph(&graphsVector[i], dictLenCount[i]);
+//     }
+// }
+
+
+
+//makePaths(pathsLocation, dictLenCount, dicTabs, palsLocation, maxLen);
+
+freePals(palsTabs, maxLen);
+freeDict(dicTabs, dictLenCount, maxLen);
+freeGraph(graphsVector, maxLen, dictLenCount);
+freeOtherMemory(palsOrder, dictLenCount,   dictLocation, palsLocation, pathsLocation);
 
 return 0;
 }

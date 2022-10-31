@@ -105,9 +105,6 @@ void graphsAdjs(graph **graphs, char ***tabs, int *lenCount, int maxLen)
                 }
                 maxModeAux = 0;
             }
-            printf("Grafo %d\n", k);
-            printAdj(graphs[k]->adj, lenCount[k]);
-            printf("\n");
         }
     }
 }
