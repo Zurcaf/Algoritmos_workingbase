@@ -3,8 +3,7 @@
 #include <limits.h>
 #include <stdbool.h>
  
-// número de vértices do grafo. enviar como argumento da função void "DSP"
-#define V 9
+
  
 // Função para encontrar o vértice a menor distância do conjunto de vértices que não estão na SPT
 int minDistance(int dist[], bool sptSet[])
