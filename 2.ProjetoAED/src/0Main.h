@@ -35,23 +35,21 @@ struct problem_{
     char* word1;
     char* word2;
     int mode;
-    int orderIndex;
     Problem *next;
 };
 
 
 #include "1Pals.h"
-#include "2Dicionario.h"
-#include "3Paths.h"
+#include "2Graphs.h"
+#include "3Dicionario.h"
+#include "4Paths.h"
 
 //libertação de toda a memoria alocada
-void freeOtherMemory(int *palsOrder, int *dictLenCount, char *statsLocation, char *dictLocation, char *palsLocation);
+void freeOtherMemory(int maxLen, graph **gs, int *palsOrder, int *dictLenCount, char *statsLocation, char *dictLocation, char *palsLocation);
 
 void freeDict(char ***tabs, int *lenCount, int maxLen);
 
 void freePals (Problem **palsTabs, int maxLen);
-
-void freeGraph (graph **gs, int maxLen, int *lenCount);
 
 //verificações dos argumentos (quantidade e extensões)
 void argsCheck(int argc);
