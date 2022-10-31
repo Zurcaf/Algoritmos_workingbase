@@ -43,7 +43,7 @@ typedef struct _nodeS
 int minDistance(int *dist, bool *sptSet, int nv);
 void printPath(int *parent, int j);
 int printSolution(int dist[], int nv, int parent[]);
-void dijkstra(struct _twint twint, int sn, int nv);
+void dijkstra(struct _twint twint, int sn, int nv, LinkedList **listv);
 
 void freeEntryItem(Item item)
 {
@@ -132,7 +132,7 @@ int printSolution(int dist[], int nv, int parent[])
 }
  
 
-void dijkstra(struct _twint twint, int sn, int nv)
+void dijkstra(struct _twint twint, int sn, int nv, LinkedList **listv)
 {
     // array de saída" em que dist[i] guarda a menor distância da src a i
     int dist[nv];  
@@ -168,13 +168,15 @@ void dijkstra(struct _twint twint, int sn, int nv)
  
             // Actualizar dist[v] se: 
             //(1) não está em sptSet
-            //(2) Há um aresta u-v 
+            //(2) Há uma aresta u-v 
             //(3) o custo total do caminho de src a v através de u é menor do que o valor actual de dist[v].
+            while (listv[u]->next)
+            
             if (!sptSet[v] && twint->n2 &&
-                dist[u] + twint->wt < dist[v])
+                dist[u] + twint.wt < dist[v])
             {
                 parent[v]  = u;
-                dist[v] = dist[u] + twint->wt;
+                dist[v] = dist[u] + twint.wt;
             }  
     }
  
