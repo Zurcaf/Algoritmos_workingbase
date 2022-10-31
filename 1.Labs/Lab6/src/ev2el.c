@@ -17,9 +17,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
+#include <stdbool.h>
 
 #include "LinkedList.h"
 #include "queue.h"
+
+
+
+
 
 typedef struct _twint
 {
@@ -33,6 +39,11 @@ typedef struct _nodeS
   
   /* could add additional information here */
 } NodeS;
+
+int minDistance(int *dist, bool *sptSet, int nv);
+void printPath(int *parent, int j);
+int printSolution(int dist[], int nv, int parent[]);
+void dijkstra(struct _twint twint, int sn, int nv);
 
 void freeEntryItem(Item item)
 {
@@ -82,6 +93,95 @@ void memoryError(char *msg)
   exit(1);
 }
 
+
+// Função para encontrar o vértice a menor distância do conjunto de vértices que não estão na SPT
+int minDistance(int dist[], bool sptSet[], int nv)
+{
+    // inicializar a infinito as distâncias do vértices que não estão incluídos na spt
+    int min = INT_MAX, min_index;
+ 
+    for (int v = 0; v < nv; v++)
+        if (sptSet[v] == false && dist[v] <= min)
+            min = dist[v], min_index = v;
+ 
+    return min_index;
+}
+
+// função para imprimir o sp da source para j, usando o parrent
+void printPath(int parent[], int j)
+{
+    // se j é a source (caso base)
+    if (parent[j]==-1)
+        return;
+ 
+    printPath(parent, parent[j]);
+ 
+    printf("%d ", j);
+}
+ 
+// função para imprimir o array com as distâncias
+int printSolution(int dist[], int nv, int parent[])
+{
+    int sn = 0;
+    printf("Vertex\t  Distance\tPath");
+    for (int i = 1; i < nv; i++)
+    {
+        printf("\n%d -> %d \t\t %d\t\t%d ", sn, i, dist[i], sn);
+        printPath(parent, i);
+    }
+}
+ 
+
+void dijkstra(struct _twint twint, int sn, int nv)
+{
+    // array de saída" em que dist[i] guarda a menor distância da src a i
+    int dist[nv];  
+ 
+    // sptSet[i] é true se o vértice i está incluído na spt
+    bool sptSet[nv];
+ 
+    // guarda a spt
+    int parent[nv];
+ 
+    // inicializa todas as distâncias a infinito e sptSet[] a false
+    for (int i = 0; i < nv; i++)
+    {
+        parent[0] = -1;
+        dist[i] = INT_MAX;
+        sptSet[i] = false;
+    }
+ 
+    // distância de src a src é 0 obviamente
+    dist[sn] = 0;
+ 
+    // ciclo para encontrar o caminho mais curto para todos os vértices
+    for (int count = 0; count < nv-1; count++)
+    {
+        // escolher o vértice com menor distância do conjunto de vértices que ainda não foi processado. u= src na primeira iteração.
+        int u = minDistance(dist, sptSet, nv);
+ 
+        // marcar o vértice escolhido como processado
+        sptSet[u] = true;
+ 
+        // actualizar o valor de dist dos vértices adjacentes ao vértice escolhido
+        for (int v = 0; v < nv; v++)
+ 
+            // Actualizar dist[v] se: 
+            //(1) não está em sptSet
+            //(2) Há um aresta u-v 
+            //(3) o custo total do caminho de src a v através de u é menor do que o valor actual de dist[v].
+            if (!sptSet[v] && twint->n2 &&
+                dist[u] + twint->wt < dist[v])
+            {
+                parent[v]  = u;
+                dist[v] = dist[u] + twint->wt;
+            }  
+    }
+ 
+    // imprimir resultados
+    printSolution(dist, nv, parent);
+}
+
 /******************************************************************************
  * doBFS ()
  *
@@ -93,7 +193,7 @@ void memoryError(char *msg)
  *
  * Description: does a BFS on the graph described by the list of adjacencies
  *              reachable through listv and prints nodes as it finds them
- *****************************************************************************/
+ *****************************************************************************/ 
 
 void doBFS(LinkedList **listv, int sn, int nv)
 {

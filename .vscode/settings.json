@@ -29,6 +29,8 @@
     "**/.vscode/**"
   ],
   "files.associations": {
-    "stdbool.h": "c"
+    "stdbool.h": "c",
+    "linkedlist.h": "c",
+    "string.h": "c"
   }
 }
