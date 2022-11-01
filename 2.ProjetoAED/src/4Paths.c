@@ -104,7 +104,8 @@ void dijkstra(Problem *problem, int sn, int nv, int end, Edge **adjs)
             break;
     }
     getPath(parent, end, &problem->path);
-    problem->mode = dist[end];
+    if (dist[end]>0)
+        problem->mode = dist[end];
     if (problem->mode == INT_MAX)
         problem->mode = -1;                
     
