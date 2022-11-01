@@ -22,7 +22,6 @@ fillGraphs(endPals, maxLen, &graphsVector);
 saveDict(dictLocation, &dictLenCount, &dicTabs, maxLen, graphsVector);
 sortDict(dictLenCount, dicTabs, maxLen, graphsVector);
 
-printPals(beginPals, maxLen, nPals, palsOrder);
 for (i = 0; i < maxLen; i++)
 {
     if (graphsVector[i] != NULL && dictLenCount[i] > 0)
@@ -32,10 +31,16 @@ for (i = 0; i < maxLen; i++)
         aux1 = endPals[i];
         while(aux1 != NULL)
         {
-        sn = binarySearch(dicTabs[i], endPals[i]->word1, dictLenCount[i]);
-        end = binarySearch(dicTabs[i], endPals[i]->word2, dictLenCount[i]);
-        dijkstra(endPals[i], sn, dictLenCount[i], end, graphsVector[i]->adj);
-
+        sn = binarySearch(dicTabs[i], aux1->word1, dictLenCount[i]);
+        end = binarySearch(dicTabs[i], aux1->word2, dictLenCount[i]);
+        if (sn != -1 && end != -1)
+        {
+            dijkstra(aux1, sn, dictLenCount[i], end, graphsVector[i]->adj);
+        }
+        else
+            aux1->mode = -1;
+        
+        //printPath(aux1->path, dicTabs[i]);
         aux1 = aux1->next;
         }
         
@@ -43,9 +48,13 @@ for (i = 0; i < maxLen; i++)
     }
 }
 
+//printPals(beginPals, maxLen, nPals, palsOrder);
+
+alocPaths(&pathsLocation, palsLocation);
 
 //fazer ficheiro de saida
-//makePaths(pathsLocation, dictLenCount, dicTabs, palsLocation, maxLen);
+makePaths(pathsLocation, dictLenCount, dicTabs, maxLen, beginPals, nPals, palsOrder);
+
 
 freePals(endPals, maxLen, beginPals);
 freeDict(dicTabs, dictLenCount, maxLen);

@@ -23,7 +23,6 @@ typedef struct _edge
     int n2;
     int wt;
     Edge *next;
-    Edge *previous;
 } Edge;
 
 
@@ -38,7 +37,6 @@ typedef struct _path Path;
 typedef struct _path
 {
     int n2;
-    Path *previous;
     Path *next;
 } Path;
 

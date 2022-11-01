@@ -15,21 +15,33 @@ int minDistance(int dist[], bool sptSet[], int nv)
 // função para imprimir o sp da source para j, usando o parrent
 void getPath(int parent[], int j, Path **path )
 {
+    Path *aux;
+
     // se j é a source (caso base)
-    if ((parent[j]) == -1)
-        return;
+    while(parent[j] != -1)
+    {
+        aux = (Path*)malloc(sizeof(Path));
+        aux->next = *path;
+        aux->n2 = j;
+        *path = aux;
+        j = parent[j];
+    }
+}
 
-    getPath(parent, parent[j], path);
+void printPath(Path *path, char **dictTabs)
+{
+    Path *aux = path;
+    while(aux != NULL)
+    {
+        printf("%d: %s ", aux->n2, dictTabs[aux->n2]);
+        aux = aux->next;
 
-    // *path = (Path*) calloc(1, sizeof(Path));
-    // memoryCheck(*path);
-    // (*path)->n2 = j;
-    // (*path)->next = NULL;
-      
+    }
+    printf("\n");
 }
  
 
-void dijkstra(Problem *palsTab, int sn, int nv, int end, Edge **adjs)
+void dijkstra(Problem *problem, int sn, int nv, int end, Edge **adjs)
 {
     Edge *edge = NULL;
 
@@ -41,6 +53,8 @@ void dijkstra(Problem *palsTab, int sn, int nv, int end, Edge **adjs)
  
     // Relaciona a SPT
     int parent[nv];
+
+    int v=0, u=0;
  
     // inicializa todas as distâncias a infinito e sptSet[] a false
     for (int i = 0; i < nv; i++)
@@ -56,30 +70,22 @@ void dijkstra(Problem *palsTab, int sn, int nv, int end, Edge **adjs)
     // ciclo para encontrar o caminho mais curto para todos os vértices
     for (int count = 0; count < nv-1; count++)
     {
-
-        int v;
         // escolher o vértice com menor distância do conjunto de vértices que ainda não foi processado. u= src na primeira iteração.
-        int u = minDistance(dist, sptSet, nv);
-        
-        if (u == end)
-        {
-            getPath(parent, end, &palsTab->path);
-            palsTab->mode = dist[end];
-            return;
-        }
+        u = minDistance(dist, sptSet, nv);
  
         // marcar o vértice escolhido como processado
         sptSet[u] = true;
 
+        edge = adjs[u];
         //Veras adjacencias de u e actualizar o valor de dist ao vértice escolhido
         while (edge != NULL)
         {
             // Actualizar dist[v] se:
             //(1) não está em sptSet
             //(2) o custo total do caminho de src a v através de u é menor do que o valor actual de dist[v].
-            v = adjs[u]->n2;
-            edge = adjs[u];
-
+            
+            v = edge->n2;
+            
             if (sptSet[v])
             {
                 edge = edge->next;
@@ -93,61 +99,62 @@ void dijkstra(Problem *palsTab, int sn, int nv, int end, Edge **adjs)
             }
             edge = edge->next;
         }
+
+        if (u == end)
+            break;
     }
+    getPath(parent, end, &problem->path);
+    problem->mode = dist[end];
+    if (problem->mode == INT_MAX)
+        problem->mode = -1;                
+    
+    return;
 }
 
-void makePaths(char *locationStats, int *lenCount, char ***tabs, char *locationPals, int lenMax)
+void makePaths(char *locationStats, int *dicLenCount, char ***dictTabs, int maxLen, Problem **tabs, int nPals, int* palsOrder)
 {
-    FILE *palsPointer = NULL, *statsPointer = NULL;
-    char word1[WORD_LEN_MAX], word2[WORD_LEN_MAX]; // buffer para a palavra
-    int mode = 0, bsResult1 = -2, bsResult2 = -2;
-
-    for (int i = 0; i < WORD_LEN_MAX; i++)
-    {
-        word1[i] = '\0';
-        word2[i] = '\0';
-    }
-
-    // abrir o ficheiro e verificar se foi aberto com sucesso
-    palsPointer = (FILE *)fopen(locationPals, "r");
-    fileCheck(palsPointer, locationPals);
-
+    FILE *statsPointer = NULL;
+    int i;
+    Problem *temp, **aux;
+    Path *aux2;
     statsPointer = (FILE *)fopen(locationStats, "w");
     fileCheck(statsPointer, locationStats);
 
-    // scan dos problemas e escrita da resposta em . pals.stats
-    while (fscanf(palsPointer, "%s %s %d", word1, word2, &mode) == 3)
+    aux = (Problem **)calloc(maxLen, sizeof(Problem *));
+    memoryCheck(aux);
+
+    for (i = 0; i < maxLen; i++)
     {
-        if (strlen(word1) != strlen(word2) || strlen(word1) > (lenMax) || strlen(word2) > (lenMax))
-        {
-            fprintf(statsPointer, "%s %s %d \n \n", word1, word2, mode);
-            continue;
-        }
-
-        bsResult1 = binarySearch(tabs[strlen(word1)], word1, lenCount[strlen(word1)]);
-        bsResult2 = binarySearch(tabs[strlen(word2)], word2, lenCount[strlen(word2)]);
-
-        if (bsResult1 == -1 || bsResult2 == -1)
-        {
-            fprintf(statsPointer, "%s %s %d \n \n", word1, word2, mode);
-            continue;
-        }
-
-        switch (mode)
-        {
-        case 1:
-            fprintf(statsPointer, "%s %d\n\n", word1, lenCount[strlen(word1)]);
-            break;
-        case 2:
-            fprintf(statsPointer, "%s %d \n%s %d \n\n", word1, bsResult1, word2, bsResult2);
-            break;
-        default:
-            fprintf(statsPointer, "%s %s %d\n\n", word1, word2, mode);
-            break;
-        }
+        aux[i] = tabs[i];
     }
+
+    for (i = 0; i < nPals; i++)
+    {
+        if (aux[palsOrder[i]] != NULL)
+        {
+            temp = aux[palsOrder[i]];
+            fprintf(statsPointer, "%s %d\n", temp->word1, temp->mode);
+            if (temp->mode != -1)
+            {
+                aux2 = temp->path;
+                while (aux2 != NULL)
+                {
+                    fprintf(statsPointer, "%s\n", dictTabs[strlen(temp->word1)][aux2->n2]);
+                    aux2 = aux2->next;
+                }
+                fprintf(statsPointer, "\n");
+            }
+            else
+            {
+                fprintf(statsPointer, "%s\n\n", temp->word2);
+            }
+        }
+        aux[palsOrder[i]] = temp->previous;
+    }
+
+    free(aux);
+
     fclose(statsPointer);
-    fclose(palsPointer);
 }
 
 int binarySearch(char **tabs, char *nome, int n)

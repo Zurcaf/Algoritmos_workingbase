@@ -58,6 +58,7 @@ void savePals(char *palsLocation, int *nPals, int **palsOrder, Problem ***tabs, 
             }
             
             addProblem(temp, 0, word1, word2, mode, tabs);
+            temp->mode = -1;
             temp->indexOrder = i;
             i++;
             continue; 
