@@ -1,0 +1,557 @@
+desc: (none)
+cmd: ./bin/wr ficheirosTeste/dicionarios/portugues.dict ficheirosTeste/problemas/Mix01/mix_01.pals
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=4957624240
+mem_heap_B=2714165
+mem_heap_extra_B=2254419
+mem_stacks_B=0
+heap_tree=detailed
+n5: 2714165 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 1179840 0x10A854: addEdge (2Graphs.c:71)
+  n1: 589920 0x10A67F: makeAdjs (2Graphs.c:24)
+   n0: 589920 0x1094F0: main (0Main.c:30)
+  n1: 589920 0x10A6C0: makeAdjs (2Graphs.c:25)
+   n0: 589920 0x1094F0: main (0Main.c:30)
+ n1: 742014 0x10AD31: saveDict (3Dicionario.c:52)
+  n0: 742014 0x109454: main (0Main.c:22)
+ n1: 736464 0x10ACC7: saveDict (3Dicionario.c:46)
+  n0: 736464 0x109454: main (0Main.c:22)
+ n1: 54000 0x10A5A6: makeAdjs (2Graphs.c:9)
+  n0: 54000 0x1094F0: main (0Main.c:30)
+ n0: 1847 in 16 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=2
+#-----------
+time=8703283745
+mem_heap_B=4022925
+mem_heap_extra_B=3085795
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=14168596681
+mem_heap_B=8985261
+mem_heap_extra_B=6394019
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=17753456530
+mem_heap_B=12043341
+mem_heap_extra_B=8432739
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=20816310403
+mem_heap_B=17338269
+mem_heap_extra_B=11962691
+mem_stacks_B=0
+heap_tree=detailed
+n4: 17338269 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 15742248 0x10A854: addEdge (2Graphs.c:71)
+  n1: 7871136 0x10A67F: makeAdjs (2Graphs.c:24)
+   n0: 7871136 0x1094F0: main (0Main.c:30)
+  n1: 7871112 0x10A6C0: makeAdjs (2Graphs.c:25)
+   n0: 7871112 0x1094F0: main (0Main.c:30)
+ n1: 742014 0x10AD31: saveDict (3Dicionario.c:52)
+  n0: 742014 0x109454: main (0Main.c:22)
+ n1: 736464 0x10ACC7: saveDict (3Dicionario.c:46)
+  n0: 736464 0x109454: main (0Main.c:22)
+ n0: 117543 in 17 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=6
+#-----------
+time=25584365750
+mem_heap_B=17636757
+mem_heap_extra_B=12161683
+mem_stacks_B=0
+heap_tree=detailed
+n4: 17636757 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 16040736 0x10A854: addEdge (2Graphs.c:71)
+  n1: 8020368 0x10A67F: makeAdjs (2Graphs.c:24)
+   n0: 8020368 0x1094F0: main (0Main.c:30)
+  n1: 8020368 0x10A6C0: makeAdjs (2Graphs.c:25)
+   n0: 8020368 0x1094F0: main (0Main.c:30)
+ n1: 742014 0x10AD31: saveDict (3Dicionario.c:52)
+  n0: 742014 0x109454: main (0Main.c:22)
+ n1: 736464 0x10ACC7: saveDict (3Dicionario.c:46)
+  n0: 736464 0x109454: main (0Main.c:22)
+ n0: 117543 in 17 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=7
+#-----------
+time=28519197143
+mem_heap_B=2303261
+mem_heap_extra_B=1873699
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=31240832829
+mem_heap_B=2888189
+mem_heap_extra_B=2263651
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=35001026258
+mem_heap_B=3661661
+mem_heap_extra_B=2779299
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=37825259761
+mem_heap_B=4126445
+mem_heap_extra_B=3089155
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=41932013663
+mem_heap_B=4935101
+mem_heap_extra_B=3628259
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=44335982897
+mem_heap_B=5363933
+mem_heap_extra_B=3914147
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=48436765241
+mem_heap_B=6663821
+mem_heap_extra_B=4780739
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=14
+#-----------
+time=53640100093
+mem_heap_B=8581805
+mem_heap_extra_B=6059395
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=57482653319
+mem_heap_B=9733709
+mem_heap_extra_B=6827331
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=16
+#-----------
+time=61879330412
+mem_heap_B=10947485
+mem_heap_extra_B=7636515
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=17
+#-----------
+time=65176187383
+mem_heap_B=11722781
+mem_heap_extra_B=8153379
+mem_stacks_B=0
+heap_tree=detailed
+n5: 11722781 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 10028280 0x10A854: addEdge (2Graphs.c:71)
+  n1: 5014152 0x10A67F: makeAdjs (2Graphs.c:24)
+   n0: 5014152 0x1094F0: main (0Main.c:30)
+  n1: 5014128 0x10A6C0: makeAdjs (2Graphs.c:25)
+   n0: 5014128 0x1094F0: main (0Main.c:30)
+ n1: 742014 0x10AD31: saveDict (3Dicionario.c:52)
+  n0: 742014 0x109454: main (0Main.c:22)
+ n1: 736464 0x10ACC7: saveDict (3Dicionario.c:46)
+  n0: 736464 0x109454: main (0Main.c:22)
+ n1: 214176 0x10A5A6: makeAdjs (2Graphs.c:9)
+  n0: 214176 0x1094F0: main (0Main.c:30)
+ n0: 1847 in 16 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=18
+#-----------
+time=69026638140
+mem_heap_B=12965645
+mem_heap_extra_B=8981955
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=72869021222
+mem_heap_B=14348573
+mem_heap_extra_B=9903907
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=20
+#-----------
+time=78358714541
+mem_heap_B=16733597
+mem_heap_extra_B=11493923
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=83650681523
+mem_heap_B=19780973
+mem_heap_extra_B=13525507
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=22
+#-----------
+time=87247053721
+mem_heap_B=22560341
+mem_heap_extra_B=15378419
+mem_stacks_B=0
+heap_tree=peak
+n4: 22560341 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 20865840 0x10A854: addEdge (2Graphs.c:71)
+  n1: 10432920 0x10A67F: makeAdjs (2Graphs.c:24)
+   n0: 10432920 0x1094F0: main (0Main.c:30)
+  n1: 10432920 0x10A6C0: makeAdjs (2Graphs.c:25)
+   n0: 10432920 0x1094F0: main (0Main.c:30)
+ n1: 742014 0x10AD31: saveDict (3Dicionario.c:52)
+  n0: 742014 0x109454: main (0Main.c:22)
+ n1: 736464 0x10ACC7: saveDict (3Dicionario.c:46)
+  n0: 736464 0x109454: main (0Main.c:22)
+ n0: 216023 in 17 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=23
+#-----------
+time=90016098958
+mem_heap_B=1844301
+mem_heap_extra_B=1488867
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=24
+#-----------
+time=94583746227
+mem_heap_B=1896093
+mem_heap_extra_B=1523395
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=25
+#-----------
+time=98259636413
+mem_heap_B=1945869
+mem_heap_extra_B=1556579
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=101920241187
+mem_heap_B=2000541
+mem_heap_extra_B=1593027
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=27
+#-----------
+time=106513054525
+mem_heap_B=2049405
+mem_heap_extra_B=1625603
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=109264266930
+mem_heap_B=2085261
+mem_heap_extra_B=1649507
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=112929300222
+mem_heap_B=2128317
+mem_heap_extra_B=1678211
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=30
+#-----------
+time=116585067884
+mem_heap_B=2170173
+mem_heap_extra_B=1706115
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=120247441416
+mem_heap_B=2211453
+mem_heap_extra_B=1733635
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=32
+#-----------
+time=123903487777
+mem_heap_B=2258781
+mem_heap_extra_B=1765187
+mem_stacks_B=0
+heap_tree=detailed
+n5: 2258781 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 742014 0x10AD31: saveDict (3Dicionario.c:52)
+  n0: 742014 0x109454: main (0Main.c:22)
+ n1: 736464 0x10ACC7: saveDict (3Dicionario.c:46)
+  n0: 736464 0x109454: main (0Main.c:22)
+ n2: 445992 0x10A854: addEdge (2Graphs.c:71)
+  n1: 223008 0x10A67F: makeAdjs (2Graphs.c:24)
+   n0: 223008 0x1094F0: main (0Main.c:30)
+  n1: 222984 0x10A6C0: makeAdjs (2Graphs.c:25)
+   n0: 222984 0x1094F0: main (0Main.c:30)
+ n1: 332464 0x10A5A6: makeAdjs (2Graphs.c:9)
+  n0: 332464 0x1094F0: main (0Main.c:30)
+ n0: 1847 in 16 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=33
+#-----------
+time=126652241817
+mem_heap_B=2298717
+mem_heap_extra_B=1791811
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=34
+#-----------
+time=129965105028
+mem_heap_B=2337597
+mem_heap_extra_B=1817731
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=132176527569
+mem_heap_B=2363805
+mem_heap_extra_B=1835203
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=36
+#-----------
+time=136598730867
+mem_heap_B=2409981
+mem_heap_extra_B=1865987
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=37
+#-----------
+time=139907028939
+mem_heap_B=2460621
+mem_heap_extra_B=1899747
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=38
+#-----------
+time=144316329117
+mem_heap_B=2527869
+mem_heap_extra_B=1944579
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=146526680944
+mem_heap_B=2562525
+mem_heap_extra_B=1967683
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=150931973008
+mem_heap_B=2646285
+mem_heap_extra_B=2023523
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=153150447821
+mem_heap_B=2678205
+mem_heap_extra_B=2044803
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=156500247081
+mem_heap_B=2722605
+mem_heap_extra_B=2074403
+mem_stacks_B=0
+heap_tree=detailed
+n5: 2722605 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 909816 0x10A854: addEdge (2Graphs.c:71)
+  n1: 454920 0x10A67F: makeAdjs (2Graphs.c:24)
+   n0: 454920 0x1094F0: main (0Main.c:30)
+  n1: 454896 0x10A6C0: makeAdjs (2Graphs.c:25)
+   n0: 454896 0x1094F0: main (0Main.c:30)
+ n1: 742014 0x10AD31: saveDict (3Dicionario.c:52)
+  n0: 742014 0x109454: main (0Main.c:22)
+ n1: 736464 0x10ACC7: saveDict (3Dicionario.c:46)
+  n0: 736464 0x109454: main (0Main.c:22)
+ n1: 332464 0x10A5A6: makeAdjs (2Graphs.c:9)
+  n0: 332464 0x1094F0: main (0Main.c:30)
+ n0: 1847 in 16 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=43
+#-----------
+time=159836211649
+mem_heap_B=2765997
+mem_heap_extra_B=2103331
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=162062044068
+mem_heap_B=2802045
+mem_heap_extra_B=2127363
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=45
+#-----------
+time=166480247744
+mem_heap_B=2861421
+mem_heap_extra_B=2166947
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=46
+#-----------
+time=170906154606
+mem_heap_B=2927229
+mem_heap_extra_B=2210819
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=47
+#-----------
+time=174226447269
+mem_heap_B=2987325
+mem_heap_extra_B=2250883
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=48
+#-----------
+time=176438148153
+mem_heap_B=3025245
+mem_heap_extra_B=2276163
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=49
+#-----------
+time=181951696435
+mem_heap_B=3115053
+mem_heap_extra_B=2336035
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=50
+#-----------
+time=184165504923
+mem_heap_B=3154413
+mem_heap_extra_B=2362275
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=51
+#-----------
+time=186376861641
+mem_heap_B=3184893
+mem_heap_extra_B=2382595
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=52
+#-----------
+time=188592272562
+mem_heap_B=3223533
+mem_heap_extra_B=2408355
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=53
+#-----------
+time=190807131086
+mem_heap_B=3270909
+mem_heap_extra_B=2439939
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=54
+#-----------
+time=193020099505
+mem_heap_B=3309837
+mem_heap_extra_B=2465891
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=55
+#-----------
+time=195232699106
+mem_heap_B=3345981
+mem_heap_extra_B=2489987
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=56
+#-----------
+time=197443197884
+mem_heap_B=3389133
+mem_heap_extra_B=2518755
+mem_stacks_B=0
+heap_tree=detailed
+n5: 3389133 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n2: 1576344 0x10A854: addEdge (2Graphs.c:71)
+  n1: 788184 0x10A67F: makeAdjs (2Graphs.c:24)
+   n0: 788184 0x1094F0: main (0Main.c:30)
+  n1: 788160 0x10A6C0: makeAdjs (2Graphs.c:25)
+   n0: 788160 0x1094F0: main (0Main.c:30)
+ n1: 742014 0x10AD31: saveDict (3Dicionario.c:52)
+  n0: 742014 0x109454: main (0Main.c:22)
+ n1: 736464 0x10ACC7: saveDict (3Dicionario.c:46)
+  n0: 736464 0x109454: main (0Main.c:22)
+ n1: 332464 0x10A5A6: makeAdjs (2Graphs.c:9)
+  n0: 332464 0x1094F0: main (0Main.c:30)
+ n0: 1847 in 16 places, all below massif's threshold (1.00%)

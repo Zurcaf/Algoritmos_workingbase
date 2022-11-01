@@ -3,11 +3,11 @@
 #include "0Main.h"
 
 
-void savePals(char *palsLocation, int *nPals, int **palsOrder, Problem ***tabs, int* maxLen);
+void savePals(char *palsLocation, int *nPals, int **palsOrder, Problem ***tabs, int* maxLen, Problem ***beginPals);
 
 Problem* initProblem(int size1, int size2);
 
-void addProblem(Problem* p, int size, char* word1, char* word2, int mode, Problem **tabs);
+void addProblem(Problem* p, int size, char* word1, char* word2, int mode, Problem ***tabs);
 
 void printPals(Problem **tabs, int maxLe, int nPals, int *palsOrder);
 

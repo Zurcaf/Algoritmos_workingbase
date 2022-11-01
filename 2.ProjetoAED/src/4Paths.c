@@ -21,17 +21,17 @@ void getPath(int parent[], int j, Path **path )
 
     getPath(parent, parent[j], path);
 
-    *path = (Path*) calloc(1, sizeof(Path));
-    memoryCheck(*path);
-    (*path)->n2 = j;
-    (*path)->next = NULL;
+    // *path = (Path*) calloc(1, sizeof(Path));
+    // memoryCheck(*path);
+    // (*path)->n2 = j;
+    // (*path)->next = NULL;
       
 }
  
 
 void dijkstra(Problem *palsTab, int sn, int nv, int end, Edge **adjs)
 {
-    Edge *edge;
+    Edge *edge = NULL;
 
     // array de saída em que dist[i] guarda a menor distância da src a i
     int dist[nv];
@@ -56,6 +56,7 @@ void dijkstra(Problem *palsTab, int sn, int nv, int end, Edge **adjs)
     // ciclo para encontrar o caminho mais curto para todos os vértices
     for (int count = 0; count < nv-1; count++)
     {
+
         int v;
         // escolher o vértice com menor distância do conjunto de vértices que ainda não foi processado. u= src na primeira iteração.
         int u = minDistance(dist, sptSet, nv);
@@ -63,7 +64,7 @@ void dijkstra(Problem *palsTab, int sn, int nv, int end, Edge **adjs)
         if (u == end)
         {
             getPath(parent, end, &palsTab->path);
-            palsTab->pathDist = dist[end];
+            palsTab->mode = dist[end];
             return;
         }
  
@@ -71,7 +72,7 @@ void dijkstra(Problem *palsTab, int sn, int nv, int end, Edge **adjs)
         sptSet[u] = true;
 
         //Veras adjacencias de u e actualizar o valor de dist ao vértice escolhido
-        while (adjs[u] != NULL)
+        while (edge != NULL)
         {
             // Actualizar dist[v] se:
             //(1) não está em sptSet
@@ -81,7 +82,7 @@ void dijkstra(Problem *palsTab, int sn, int nv, int end, Edge **adjs)
 
             if (sptSet[v])
             {
-                adjs[u] = adjs[u]->next;
+                edge = edge->next;
                 continue;
             }
             
@@ -90,7 +91,7 @@ void dijkstra(Problem *palsTab, int sn, int nv, int end, Edge **adjs)
                 parent[v] = u;
                 dist[v] = dist[u] + edge->wt;
             }
-            adjs[u] = adjs[u]->next;
+            edge = edge->next;
         }
     }
 }

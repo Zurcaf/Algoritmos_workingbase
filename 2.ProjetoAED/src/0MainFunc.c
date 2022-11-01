@@ -20,30 +20,24 @@ void freeOtherMemory(int maxLen, graph **gs, int * palsOrder, int *dictLenCount,
     free(palsLocation);
 }
 
-void freePals (Problem **palsTabs, int maxLen)
+void freePals (Problem **endPals, int maxLen, Problem **beginPals)
 {
     int i=0;
     Problem *aux=NULL, *aux2=NULL;
-    Path *aux3=NULL;
     for (i = 0; i < maxLen; i++)
     {
-        aux = palsTabs[i];
+        aux = endPals[i];
         while (aux != NULL)
         {
             aux2 = aux->next;
             free(aux->word1);
             free(aux->word2);
-            while (aux->path != NULL)
-            {
-                aux3 = aux->path->next;
-                free(aux->path);
-                aux->path = aux3;
-            }
             free(aux);
             aux = aux2;
         }
     }
-    free(palsTabs);
+    free(endPals);
+    free(beginPals);
 }
 
 void freeDict(char ***tabs, int *lenCount, int maxLen)

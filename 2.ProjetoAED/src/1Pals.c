@@ -1,6 +1,6 @@
 #include "0Main.h"
 
-void savePals(char *palsLocation, int *nPals, int **palsOrder, Problem ***tabs, int* maxLen)
+void savePals(char *palsLocation, int *nPals, int **palsOrder, Problem ***tabs, int* maxLen, Problem ***beginPals)
 {
     FILE *palsPointer=NULL;
     int i=0; // variaveis auxiliares
@@ -36,6 +36,10 @@ void savePals(char *palsLocation, int *nPals, int **palsOrder, Problem ***tabs, 
     (*tabs) = (Problem**)calloc(*maxLen, sizeof(Problem*));
     memoryCheck(*tabs);
 
+    (*beginPals) = (Problem**)calloc(*maxLen, sizeof(Problem*));
+    memoryCheck(*beginPals);
+
+
     //Alocar palOrder
     (*palsOrder) = (int*)calloc((*nPals), sizeof(int));
     memoryCheck(*palsOrder);
@@ -48,30 +52,42 @@ void savePals(char *palsLocation, int *nPals, int **palsOrder, Problem ***tabs, 
         if (strlen(word1) != strlen(word2))
         {
             (*palsOrder)[i] = 0;
-            addProblem(temp, 0, word1, word2, mode, *tabs);
+            if ((*tabs)[0] == NULL)
+            {
+                (*beginPals)[0] = temp;
+            }
+            
+            addProblem(temp, 0, word1, word2, mode, tabs);
             temp->indexOrder = i;
             i++;
             continue; 
         }
-        addProblem(temp, strlen(word1), word1, word2, mode, *tabs);
+        if((*tabs)[strlen(word1)] == NULL)
+        {
+            (*beginPals)[strlen(word1)] = temp;
+        }
+            
+        addProblem(temp, strlen(word1), word1, word2, mode, tabs);
         (*palsOrder)[i] = strlen(word1);
         temp->indexOrder = i;
         i++;
     }
 
-    printPals(*tabs, *maxLen, *nPals, *palsOrder);
+    //printPals(*tabs, *maxLen, *nPals, *palsOrder);
 
     fclose(palsPointer);
 }
 
-void addProblem(Problem* p, int size, char* word1, char* word2, int mode, Problem **tabs)
+void addProblem(Problem* p, int size, char* word1, char* word2, int mode, Problem ***tabs)
 {
     strcpy(p->word1, word1);
     strcpy(p->word2, word2);
     p->mode = mode;
-    
-    p->next = (tabs)[size];
-    tabs[size] = p; 
+    if((*tabs)[size] != NULL)
+        (*tabs)[size]->previous = p;
+
+    p->next = (*tabs)[size];
+    (*tabs)[size] = p; 
 }
 
 void printPals(Problem **tabs, int maxLen, int nPals, int* palsOrder)
@@ -89,10 +105,12 @@ void printPals(Problem **tabs, int maxLen, int nPals, int* palsOrder)
 
     for(i=0; i<nPals; i++)
     {
+        if(aux[palsOrder[i]] != NULL)
+        {
         temp = aux[palsOrder[i]];
         printf("%s %s %d      %d\n", temp->word1, temp->word2, temp->mode, temp->indexOrder);
-        aux[palsOrder[i]] = temp->next;
-
+        aux[palsOrder[i]] = temp->previous;
+        }
     }
     printf("PalsOrder: ");
     for (i=0; i<nPals; i++)
@@ -114,6 +132,10 @@ Problem* initProblem(int size1, int size2)
     memoryCheck(p->word2);
     p->mode = 0;
     p->next = NULL;
+    p->previous = NULL;
+    p->indexOrder = 0;
+    p->path = NULL;
+
     return p;
 }
 

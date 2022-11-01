@@ -28,7 +28,7 @@ void makeAdjs(graph *graph, char **tabs, int lenCount, int maxLen)
         }
         maxModeAux = 0;
     }
-    printAdj(graph->adj, lenCount);
+    // printAdj(graph->adj, lenCount);
 }
 
 void printAdj(Edge **adj, int lenCount)

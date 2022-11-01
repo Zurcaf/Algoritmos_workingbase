@@ -49,9 +49,9 @@ struct problem_{
     char* word2;
     int mode;
     int indexOrder;
-    int pathDist;
     Path *path;
     Problem *next;
+    Problem *previous;
 };
 
 
@@ -65,7 +65,7 @@ void freeOtherMemory(int maxLen, graph **gs, int *palsOrder, int *dictLenCount, 
 
 void freeDict(char ***tabs, int *lenCount, int maxLen);
 
-void freePals (Problem **palsTabs, int maxLen);
+void freePals (Problem **palsTabs, int maxLen, Problem **beginPals);
 
 //verificações dos argumentos (quantidade e extensões)
 void argsCheck(int argc);
