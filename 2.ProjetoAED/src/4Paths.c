@@ -104,10 +104,10 @@ void dijkstra(Problem *problem, int sn, int nv, int end, Edge **adjs)
             break;
     }
     getPath(parent, end, &problem->path);
-    if (dist[end]>0)
-        problem->mode = dist[end];
-    if (problem->mode == INT_MAX)
-        problem->mode = -1;                
+    problem->mode = dist[end];
+    
+    if (problem->mode == INT_MAX || problem->mode < 0)
+        problem->mode = -1;
     
     return;
 }
@@ -134,21 +134,28 @@ void makePaths(char *locationStats, int *dicLenCount, char ***dictTabs, int maxL
         if (aux[palsOrder[i]] != NULL)
         {
             temp = aux[palsOrder[i]];
+
             fprintf(statsPointer, "%s %d\n", temp->word1, temp->mode);
-            if (temp->mode != -1)
-            {
-                aux2 = temp->path;
-                while (aux2 != NULL)
-                {
-                    fprintf(statsPointer, "%s\n", dictTabs[strlen(temp->word1)][aux2->n2]);
-                    aux2 = aux2->next;
-                }
-                fprintf(statsPointer, "\n");
-            }
-            else
+            if (temp->mode == -1)
             {
                 fprintf(statsPointer, "%s\n\n", temp->word2);
+                aux[palsOrder[i]] = temp->previous;
+                continue;
             }
+            if (temp->mode == 0)
+            {
+                fprintf(statsPointer, "%s\n\n", temp->word2);
+                aux[palsOrder[i]] = temp->previous;
+                continue;
+            }
+
+            aux2 = temp->path;
+            while (aux2 != NULL)
+            {
+                fprintf(statsPointer, "%s\n", dictTabs[strlen(temp->word1)][aux2->n2]);
+                aux2 = aux2->next;
+            }
+            fprintf(statsPointer, "\n");
         }
         aux[palsOrder[i]] = temp->previous;
     }

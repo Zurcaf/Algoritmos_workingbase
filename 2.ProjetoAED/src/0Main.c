@@ -24,28 +24,43 @@ sortDict(dictLenCount, dicTabs, maxLen, graphsVector);
 
 for (i = 0; i < maxLen; i++)
 {
-    if (graphsVector[i] != NULL && dictLenCount[i] > 0)
+    if (graphsVector[i] == NULL || dictLenCount[i] <= 0)
     {
-        makeAdjs(graphsVector[i], dicTabs[i], dictLenCount[i], maxLen);
-
         aux1 = endPals[i];
-        while(aux1 != NULL)
+        while (aux1 != NULL)
         {
+            aux1->mode = -1;
+            aux1 = aux1->next;
+        }
+        continue;
+    }
+
+    makeAdjs(graphsVector[i], dicTabs[i], dictLenCount[i], maxLen);
+
+    aux1 = endPals[i];
+    while (aux1 != NULL)
+    {
         sn = binarySearch(dicTabs[i], aux1->word1, dictLenCount[i]);
         end = binarySearch(dicTabs[i], aux1->word2, dictLenCount[i]);
-        if (sn != -1 && end != -1)
+        if (sn == -1 || end == -1)
         {
-            dijkstra(aux1, sn, dictLenCount[i], end, graphsVector[i]->adj);
-        }
-        else
             aux1->mode = -1;
-        
-        //printPath(aux1->path, dicTabs[i]);
-        aux1 = aux1->next;
+            aux1 = aux1->next;
+            continue;
         }
-        
-        freeGraph(graphsVector[i], maxLen, dictLenCount[i]);
+        if (sn == end)
+        {
+            aux1->mode = 0;
+            aux1 = aux1->next;
+            continue;
+        }
+        dijkstra(aux1, sn, dictLenCount[i], end, graphsVector[i]->adj);
+
+        // printPath(aux1->path, dicTabs[i]);
+        aux1 = aux1->next;
     }
+
+    freeGraph(graphsVector[i], maxLen, dictLenCount[i]);
 }
 
 //printPals(beginPals, maxLen, nPals, palsOrder);
