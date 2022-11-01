@@ -43,17 +43,19 @@ void savePals(char *palsLocation, int *nPals, int **palsOrder, Problem ***tabs, 
     // preencher lenCount com o numero de ocorrencias de cada tamanho de palavra
     while (fscanf(palsPointer, "%s %s %d", word1, word2, &mode) == 3)
     {
+        temp = initProblem(strlen(word1), strlen(word2));
+
         if (strlen(word1) != strlen(word2))
         {
             (*palsOrder)[i] = 0;
-            temp = initProblem(strlen(word1), strlen(word2));
             addProblem(temp, 0, word1, word2, mode, *tabs);
+            temp->indexOrder = i;
             i++;
             continue; 
         }
-        temp = initProblem(strlen(word1), strlen(word2));
         addProblem(temp, strlen(word1), word1, word2, mode, *tabs);
         (*palsOrder)[i] = strlen(word1);
+        temp->indexOrder = i;
         i++;
     }
 
@@ -88,13 +90,14 @@ void printPals(Problem **tabs, int maxLen, int nPals, int* palsOrder)
     for(i=0; i<nPals; i++)
     {
         temp = aux[palsOrder[i]];
-        printf("%s %s %d\n", temp->word1, temp->word2, temp->mode);
+        printf("%s %s %d      %d\n", temp->word1, temp->word2, temp->mode, temp->indexOrder);
         aux[palsOrder[i]] = temp->next;
+
     }
     printf("PalsOrder: ");
     for (i=0; i<nPals; i++)
         printf("%d ", palsOrder[i]);
-
+    
     printf("\n");
 
     free(aux);
@@ -103,7 +106,7 @@ void printPals(Problem **tabs, int maxLen, int nPals, int* palsOrder)
 
 Problem* initProblem(int size1, int size2)
 {
-    Problem *p = (Problem*)malloc(sizeof(Problem));
+    Problem *p = (Problem*)calloc(1, sizeof(Problem));
     memoryCheck(p);
     p->word1 = (char*)malloc((size1 +1) * sizeof(char));
     memoryCheck(p->word1);

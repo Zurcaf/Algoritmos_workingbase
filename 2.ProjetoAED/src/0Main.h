@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
+#include <limits.h>
 
 
 #define DICT_EXT ".dict"
@@ -16,25 +16,41 @@
 #define EXT_NAME_MAX 40
 #define LINE_MAX 1000
 
+typedef struct _edge Edge;
 
-typedef struct edge
+typedef struct _edge
 {
     int n2;
     int wt;
-    struct edge *next;
+    Edge *next;
+    Edge *previous;
 } Edge;
+
+
 typedef struct graph
 {
     int vertices, maxMode;
     Edge **adj; 
 }graph;
 
+typedef struct _path Path;
+
+typedef struct _path
+{
+    int n2;
+    Path *previous;
+    Path *next;
+} Path;
 
 typedef struct problem_ Problem;
+
 struct problem_{
     char* word1;
     char* word2;
     int mode;
+    int indexOrder;
+    int pathDist;
+    Path *path;
     Problem *next;
 };
 

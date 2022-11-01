@@ -8,7 +8,7 @@ char ***dicTabs=NULL;
 graph **graphsVector=NULL;
 Problem **palsTabs=NULL;
 
-int i=0;
+int i=0, sn = 0, end = 0;
 
 argsCheck(argc);
 dictAndPalsCheck(argv);
@@ -28,8 +28,16 @@ for (i = 0; i < maxLen; i++)
     if (graphsVector[i] != NULL && dictLenCount[i] > 0)
     {
         makeAdjs(graphsVector[i], dicTabs[i], dictLenCount[i], maxLen);
-        // dijkstra(graphsVector[i], dictLenCount[i], palsTabs[i], pathsLocation);
-        // alocPaths(&pathsLocation, palsLocation);
+
+        while(palsTabs[i] != NULL)
+        {
+        sn = binarySearch(dicTabs[i], palsTabs[i]->word1, dictLenCount[i]);
+        end = binarySearch(dicTabs[i], palsTabs[i]->word2, dictLenCount[i]);
+        dijkstra(palsTabs[i], sn, dictLenCount[i], end, graphsVector[i]->adj);
+
+        palsTabs[i] = palsTabs[i]->next;
+        }
+        
         freeGraph(graphsVector[i], maxLen, dictLenCount[i]);
     }
 }
@@ -40,7 +48,7 @@ for (i = 0; i < maxLen; i++)
 
 freePals(palsTabs, maxLen);
 freeDict(dicTabs, dictLenCount, maxLen);
-freeOtherMemory(maxLen, graphsVector, palsOrder, dictLenCount,   dictLocation, palsLocation, pathsLocation);
+freeOtherMemory(maxLen, graphsVector, palsOrder, dictLenCount, dictLocation, palsLocation, pathsLocation);
 
 return 0;
 }

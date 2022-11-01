@@ -10,4 +10,9 @@ void makePaths(char *locationStats, int *lenCount, char ***tabs, char *locationP
 int binarySearch(char **tabs, char *nome, int n);
 
 
+
+int minDistance(int *dist, bool *sptSet, int nv);
+void getPath(int parent[], int j, Path **path );
+void dijkstra(Problem *palsTab, int sn, int nv, int end, Edge **adjs);
+
 #endif

@@ -24,6 +24,7 @@ void freePals (Problem **palsTabs, int maxLen)
 {
     int i=0;
     Problem *aux=NULL, *aux2=NULL;
+    Path *aux3=NULL;
     for (i = 0; i < maxLen; i++)
     {
         aux = palsTabs[i];
@@ -32,6 +33,12 @@ void freePals (Problem **palsTabs, int maxLen)
             aux2 = aux->next;
             free(aux->word1);
             free(aux->word2);
+            while (aux->path != NULL)
+            {
+                aux3 = aux->path->next;
+                free(aux->path);
+                aux->path = aux3;
+            }
             free(aux);
             aux = aux2;
         }

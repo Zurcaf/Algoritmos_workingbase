@@ -6,7 +6,7 @@ void makeAdjs(graph *graphs, char **tabs, int lenCount, int maxLen);
 
 int edgeWeight (char *word1, char *word2, int k);
 
-Edge* addEdge(graph *g, int n1, int n2, int wt);
+Edge* addEdge(Edge *g, int n1, int n2, int wt);
 
 void printAdj(Edge **adj, int lenCount);
 

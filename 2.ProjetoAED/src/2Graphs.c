@@ -21,14 +21,14 @@ void makeAdjs(graph *graph, char **tabs, int lenCount, int maxLen)
             }
             if (wtAux > 0)
             {
-                graph->adj[i] = addEdge(graph, i, j, wtAux);
-                graph->adj[j] = addEdge(graph, j, i, wtAux);
+                graph->adj[i] = addEdge(graph->adj[i], i, j, wtAux);
+                graph->adj[j] = addEdge(graph->adj[j], j, i, wtAux);
             }
             wtAux = 0;
         }
         maxModeAux = 0;
     }
-    //printAdj(graph->adj, lenCount);
+    printAdj(graph->adj, lenCount);
 }
 
 void printAdj(Edge **adj, int lenCount)
@@ -65,7 +65,7 @@ int edgeWeight(char *word1, char *word2, int k)
     return count;
 }
 
-Edge *addEdge(graph *g, int n1, int n2, int wt)
+Edge *addEdge(Edge *g, int n1, int n2, int wt)
 
 {
     Edge *newEdge = (Edge *)malloc(sizeof(Edge));
@@ -73,7 +73,7 @@ Edge *addEdge(graph *g, int n1, int n2, int wt)
 
     newEdge->n2 = n2;
     newEdge->wt = wt;
-    newEdge->next = g->adj[n1];
+    newEdge->next = g;
     return newEdge;
 }
 
@@ -114,20 +114,13 @@ void freeGraph (graph *gs, int maxLen, int lenCount)
 
     for (j = 0; j < lenCount; j++)
     {
-        if(gs->adj[j] != NULL)
+        aux = gs->adj[j];
+        while (aux != NULL)
         {
-            aux = gs->adj[j];
-            while (aux != NULL)
-            {
-                aux2 = aux;
-                aux = aux->next;
-                free(aux2);
-            }
-            
+            aux2 = aux->next;
+            free(aux);
+            aux = aux2;
         }
     }
-
     free(gs->adj);
-    
-    
 }

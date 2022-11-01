@@ -1,4 +1,99 @@
 #include "0Main.h"
+// Função para encontrar o vértice na franja a menor distância da SPT
+int minDistance(int dist[], bool sptSet[], int nv)
+{
+    //min é inicializado a infinito
+    int min = INT_MAX, min_index = -1;
+ 
+    for (int v = 0; v < nv; v++)
+        if (sptSet[v] == false && dist[v] <= min)
+            min = dist[v], min_index = v;
+ 
+    return min_index;
+}
+
+// função para imprimir o sp da source para j, usando o parrent
+void getPath(int parent[], int j, Path **path )
+{
+    // se j é a source (caso base)
+    if ((parent[j]) == -1)
+        return;
+
+    getPath(parent, parent[j], path);
+
+    *path = (Path*) calloc(1, sizeof(Path));
+    memoryCheck(*path);
+    (*path)->n2 = j;
+    (*path)->next = NULL;
+      
+}
+ 
+
+void dijkstra(Problem *palsTab, int sn, int nv, int end, Edge **adjs)
+{
+    Edge *edge;
+
+    // array de saída em que dist[i] guarda a menor distância da src a i
+    int dist[nv];
+ 
+    // sptSet[i] é true se o vértice i está incluído na spt
+    bool sptSet[nv];
+ 
+    // Relaciona a SPT
+    int parent[nv];
+ 
+    // inicializa todas as distâncias a infinito e sptSet[] a false
+    for (int i = 0; i < nv; i++)
+    {
+        parent[i] = -1;
+        dist[i] = INT_MAX;
+        sptSet[i] = false;
+    }
+ 
+    // distância de src a src é 0 obviamente
+    dist[sn] = 0;
+ 
+    // ciclo para encontrar o caminho mais curto para todos os vértices
+    for (int count = 0; count < nv-1; count++)
+    {
+        int v;
+        // escolher o vértice com menor distância do conjunto de vértices que ainda não foi processado. u= src na primeira iteração.
+        int u = minDistance(dist, sptSet, nv);
+        
+        if (u == end)
+        {
+            getPath(parent, end, &palsTab->path);
+            palsTab->pathDist = dist[end];
+            return;
+        }
+ 
+        // marcar o vértice escolhido como processado
+        sptSet[u] = true;
+
+        //Veras adjacencias de u e actualizar o valor de dist ao vértice escolhido
+        while (adjs[u] != NULL)
+        {
+            // Actualizar dist[v] se:
+            //(1) não está em sptSet
+            //(2) o custo total do caminho de src a v através de u é menor do que o valor actual de dist[v].
+            v = adjs[u]->n2;
+            edge = adjs[u];
+
+            if (sptSet[v])
+            {
+                adjs[u] = adjs[u]->next;
+                continue;
+            }
+            
+            if ((dist[u] + edge->wt) < dist[v])
+            {
+                parent[v] = u;
+                dist[v] = dist[u] + edge->wt;
+            }
+            adjs[u] = adjs[u]->next;
+        }
+    }
+}
 
 void makePaths(char *locationStats, int *lenCount, char ***tabs, char *locationPals, int lenMax)
 {
