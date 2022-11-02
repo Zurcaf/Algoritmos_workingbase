@@ -16,7 +16,7 @@ dictAndPalsCheck(argv);
 dictAndPalsAloc(argv, &dictLocation, &palsLocation);
 
 savePals(palsLocation, &nPals, &palsOrder, &endPals, &maxLen, &beginPals);
-fillGraphs(endPals, maxLen, &graphsVector);
+fillGraphs(beginPals, maxLen, &graphsVector);
 
 //tratamento do dicionario (guardar e organizar)
 saveDict(dictLocation, &dictLenCount, &dicTabs, maxLen, graphsVector);
@@ -24,7 +24,7 @@ sortDict(dictLenCount, dicTabs, maxLen, graphsVector);
 
 for (i = 0; i < maxLen; i++)
 {
-    if (graphsVector[i] == NULL || dictLenCount[i] <= 0)
+    if (graphsVector[i] == NULL || dictLenCount[i] == 0)
     {
         aux1 = endPals[i];
         while (aux1 != NULL)
@@ -35,30 +35,30 @@ for (i = 0; i < maxLen; i++)
         continue;
     }
 
+    
+
     makeAdjs(graphsVector[i], dicTabs[i], dictLenCount[i], maxLen);
+    
 
     aux1 = endPals[i];
     while (aux1 != NULL)
     {
         sn = binarySearch(dicTabs[i], aux1->word1, dictLenCount[i]);
         end = binarySearch(dicTabs[i], aux1->word2, dictLenCount[i]);
+
+        
         if (sn == -1 || end == -1)
         {
             aux1->mode = -1;
             aux1 = aux1->next;
             continue;
         }
-        if (sn == end)
-        {
-            aux1->mode = 0;
-            aux1 = aux1->next;
-            continue;
-        }
+        
         dijkstra(aux1, sn, dictLenCount[i], end, graphsVector[i]->adj);
-
         // printPath(aux1->path, dicTabs[i]);
         aux1 = aux1->next;
     }
+    
 
     freeGraph(graphsVector[i], maxLen, dictLenCount[i]);
 }

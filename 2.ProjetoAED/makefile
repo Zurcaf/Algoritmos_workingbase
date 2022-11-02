@@ -1,19 +1,13 @@
+CFLAGS= -Wall -std=c99 -O3
 
-CFLAGS= -Wall -std=c99 -g
-
-OBJ = obj
-SRC = src
-HEAD = include
-SRCS = $(wildcard $(SRC)/*.c)
-OBJS = $(patsubst $(SRC)/%.c, $(OBJ)/%.o, $(SRCS))
+SRCS = $(wildcard *.c)
+OBJS = $(patsubst %.c, %.o, $(SRCS))
 SUBMITNAME = ProjetoAED
 
-BINDIR = bin
-BIN = $(BINDIR)/wr
-SUBMITNAME = wrdmttns
+BINDIR =
+BIN = wrdmttns
 
 all: $(BIN)
-
 
 $(BIN): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@
@@ -21,20 +15,7 @@ $(BIN): $(OBJS)
 $(OBJ)/%.o: $(SRC)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-wrdmttns: CFLAGS= -Wall -std=c99 -O3
-wrdmttns: $(clean)
-wrdmttns: $(BIN)
-
-
-
-$(BINDIR):
-	mkdir -p $(BINDIR)
-
-$(OBJ):
-	mkdir -p $(OBJ)
-
 clean:
-	rm -r $(BINDIR)/* $(OBJ)/*
+	rm -f *.o
+	
 
-submit:
-	zip -r $(SUBMITNAME) $(SRC) $(MAKEFILE) $(README)

@@ -57,9 +57,9 @@
       "name": "gdb Projeto big test",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/2.ProjetoAED/bin/wr",
+      "program": "${workspaceFolder}/2.ProjetoAED/wrdmttns",
       "args": [
-        "${workspaceFolder}/2.ProjetoAED/ficheirosTeste/dicionarios/portugues04-04-sl.dict",
+        "${workspaceFolder}/2.ProjetoAED/ficheirosTeste/dicionarios/portugues.dict",
         "${workspaceFolder}/2.ProjetoAED/ficheirosTeste/problemas/Mix01/mix_03.pals",
       ],
       "stopAtEntry": false,

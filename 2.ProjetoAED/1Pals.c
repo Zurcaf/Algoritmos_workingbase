@@ -3,7 +3,7 @@
 void savePals(char *palsLocation, int *nPals, int **palsOrder, Problem ***tabs, int* maxLen, Problem ***beginPals)
 {
     FILE *palsPointer=NULL;
-    int i=0; // variaveis auxiliares
+    int i=0, wtAux=0; // variaveis auxiliares
 
     char word1[WORD_LEN_MAX] = {0}, word2[WORD_LEN_MAX] = {0};
     int  mode=0;
@@ -49,7 +49,7 @@ void savePals(char *palsLocation, int *nPals, int **palsOrder, Problem ***tabs, 
     {
         temp = initProblem(strlen(word1), strlen(word2));
 
-        if (strlen(word1) != strlen(word2))
+        if (strlen(word1) != strlen(word2) || mode <= 0)
         {
             (*palsOrder)[i] = 0;
             if ((*tabs)[0] == NULL)
@@ -63,20 +63,44 @@ void savePals(char *palsLocation, int *nPals, int **palsOrder, Problem ***tabs, 
             i++;
             continue; 
         }
+
         if((*tabs)[strlen(word1)] == NULL)
         {
             (*beginPals)[strlen(word1)] = temp;
         }
-            
+        
+        wtAux = charDiff(word1, word2, strlen(word1), mode);
+
+        if ((wtAux == 0))
+            mode = 0;
+
+        if (mode > wtAux)
+            mode = wtAux;
+
         addProblem(temp, strlen(word1), word1, word2, mode, tabs);
         (*palsOrder)[i] = strlen(word1);
         temp->indexOrder = i;
         i++;
     }
 
-    //printPals(*tabs, *maxLen, *nPals, *palsOrder);
+    //printPals(*beginPals, *maxLen, *nPals, *palsOrder);
 
     fclose(palsPointer);
+}
+
+int charDiff(char *word1, char *word2, int k, int maxDiff)
+{
+    int i = 0, count = 0;
+
+    for (i = 0; i < k; i++)
+    {
+        if (word1[i] != word2[i])
+        {
+            count++;
+        }
+    }
+
+    return count;
 }
 
 void addProblem(Problem* p, int size, char* word1, char* word2, int mode, Problem ***tabs)

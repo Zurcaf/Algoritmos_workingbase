@@ -2,33 +2,28 @@
 
 void makeAdjs(graph *graph, char **tabs, int lenCount, int maxLen)
 {
-    int i = 0, j = 0, wtAux = 0, maxModeAux = 0, k=0;
+    int i = 0, j = 0, wtAux = 0, k=0;
 
     k = strlen(tabs[0]);
 
     graph->adj = (Edge **)calloc(lenCount, sizeof(Edge *));
     memoryCheck(graph->adj);
 
+
     for (i = 0; i < lenCount; i++)
     {
         for (j = i; j < lenCount; j++)
         {
-            wtAux = edgeWeight(tabs[i], tabs[j], k);
-            maxModeAux = graph->maxMode * graph->maxMode;
-            if (wtAux > maxModeAux)
-            {
-                continue;
-            }
+            wtAux = edgeWeight(tabs[i], tabs[j], k, graph->maxMode);
+            
             if (wtAux > 0)
             {
                 graph->adj[i] = addEdge(graph->adj[i], i, j, wtAux);
                 graph->adj[j] = addEdge(graph->adj[j], j, i, wtAux);
             }
-            wtAux = 0;
         }
-        maxModeAux = 0;
     }
-    // printAdj(graph->adj, lenCount);
+    //printAdj(graph->adj, lenCount);
 }
 
 void printAdj(Edge **adj, int lenCount)
@@ -48,7 +43,7 @@ void printAdj(Edge **adj, int lenCount)
     }
 }
 
-int edgeWeight(char *word1, char *word2, int k)
+int edgeWeight(char *word1, char *word2, int k, int maxDiff)
 {
     int i = 0, count = 0;
 
@@ -57,6 +52,10 @@ int edgeWeight(char *word1, char *word2, int k)
         if (word1[i] != word2[i])
         {
             count++;
+            if (count > maxDiff)
+            {
+                return 0;
+            }
         }
     }
 

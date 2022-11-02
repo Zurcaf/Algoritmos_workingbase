@@ -123,7 +123,7 @@ void makePaths(char *locationStats, int *dicLenCount, char ***dictTabs, int maxL
 {
     FILE *statsPointer = NULL;
     int i;
-    Problem *temp, **aux;
+    Problem *temp = NULL, **aux = NULL;
     Path *aux2;
     statsPointer = (FILE *)fopen(locationStats, "w");
     fileCheck(statsPointer, locationStats);

@@ -4,7 +4,7 @@
 
 void makeAdjs(graph *graphs, char **tabs, int lenCount, int maxLen);
 
-int edgeWeight (char *word1, char *word2, int k);
+int edgeWeight (char *word1, char *word2, int k, int maxDiff);
 
 Edge* addEdge(Edge *g, int n1, int n2, int wt);
 
