@@ -54,7 +54,7 @@ void dijkstra(Problem *problem, int sn, int nv, int end, Edge **adjs)
     // Relaciona a SPT
     int parent[nv];
 
-    int v=0, u=0;
+    int v=0, u=0, wtAux=0;
  
     // inicializa todas as distâncias a infinito e sptSet[] a false
     for (int i = 0; i < nv; i++)
@@ -77,9 +77,16 @@ void dijkstra(Problem *problem, int sn, int nv, int end, Edge **adjs)
         sptSet[u] = true;
 
         edge = adjs[u];
+
         //Veras adjacencias de u e actualizar o valor de dist ao vértice escolhido
         while (edge != NULL)
-        {
+        {   
+            wtAux = problem->mode * problem->mode;
+            if (edge->wt > wtAux)
+            {
+                edge = edge->next;
+                continue;
+            }
             // Actualizar dist[v] se:
             //(1) não está em sptSet
             //(2) o custo total do caminho de src a v através de u é menor do que o valor actual de dist[v].
