@@ -1,1 +1,0 @@
-comprimento = strlen(linha_dicionario);

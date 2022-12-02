@@ -1,2 +1,0 @@
-
-    strarr[i] = strptr;
