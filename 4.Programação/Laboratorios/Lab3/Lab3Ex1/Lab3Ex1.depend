@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1648212083 source:c:\users\afons\onedrive\ambiente de trabalho\lab3ex1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
+1648213528 source:c:\users\afons\onedrive\ambiente de trabalho\programacao\laboratorios\lab3\lab3ex1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+

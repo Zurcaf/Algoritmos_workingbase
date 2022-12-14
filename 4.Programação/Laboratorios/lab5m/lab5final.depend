@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1649346682 source:/home/kubuntu/Desktop/projects/lab5/lab5final/main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
